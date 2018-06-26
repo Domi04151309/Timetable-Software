@@ -1,0 +1,353 @@
+<!doctype html>
+<html>
+<head>
+  <title>Timetable-Software</title>
+	<meta charset="utf-8">  
+	<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <style>
+  * {
+      box-sizing: border-box;
+  }
+  html, body {
+      font-family: arial, sans-serif;
+      height: 100%;
+      width: 100%;
+      max-width:720px;
+      margin: 0 auto;
+  }
+  table {
+      border-collapse: collapse;
+      width: 100%;
+      -webkit-print-color-adjust: exact; 
+      printer-colors: exact;
+      color-adjust: exact;
+  }
+  td, th, div {
+      border: 1px solid Gainsboro;
+      text-align: center;
+      width: 16%
+  }
+  th {
+      border: 1px solid #000;
+      background: black;
+      color: white;
+      padding: 8px;
+  }
+  td > div, div > div { 
+      border: none;
+      padding: 8px;
+      width: 100%;
+  }
+  div {
+      background-clip: content-box, padding-box;
+      padding: 8px;
+  }
+  button {
+      background-color: DodgerBlue;
+      color: white;
+      border: 2px solid DodgerBlue;
+      padding: 10px 24px;
+      text-align: center;
+      margin: 4px 0;
+      transition-duration: 0.5s;
+      cursor: pointer;
+      outline: none;  
+  }
+  button:hover {
+      background-color: white; 
+      color: black; 
+  }
+  div#delete {
+      height: 8vw;
+      width: 100%;
+      padding: 0;
+      border: none;
+      background-color: FireBrick;
+  }
+  @media print {
+      @page {size: landscape;margin:0;}
+      h1, h2, button, div#delete, span, p, ul {
+          display: none;
+      }
+      html, body {
+          box-sizing: border-box;
+          max-width: 100%;
+          padding: 32px;
+      }
+  }
+  </style>
+</head>
+<body>
+  <h1>Timetable</h1>
+  <noscript><h2 style="color:red">Please enable JavaScript</h2></noscript>
+  <table>
+    <tr>
+      <th></th>
+      <th>Monday</th>
+      <th>Tuesday</th>
+      <th>Wednesday</th>
+      <th>Thursday</th>
+      <th>Friday</th>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td id="11" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="12" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="13" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="14" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="15" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td id="21" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="22" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="23" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="24" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="25" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td id="31" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="32" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="33" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="34" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="35" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td id="41" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="42" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="43" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="44" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="45" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+    </tr>
+    <tr>
+      <th>5</th>
+      <td id="51" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="52" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="53" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="54" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="55" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+    </tr>
+    <tr>
+      <th>6</th>
+      <td id="61" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="62" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="63" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="64" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+      <td id="65" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
+    </tr>
+  </table>
+  <h2>Subjects</h2>
+  <button id="btn1">Add subject</button>
+  <button id="btn0">Add lesson</button>
+  <p style="color:grey">Drag and drop the subjects into the table!</p>
+  <span id="new">
+  </span>
+  <h2>Deleting</h2>
+  <div id="delete" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+  <button id="btn2">Empty trash</button>
+  <button id="btn3">Delete all subjects</button>
+  <button id="btn4">Delete all additional lessons</button>
+  <script>
+  var lesson = 7;
+  var number = 0;
+  $(document).ready(function(){
+      $("#btn0").click(function(){
+          $("table").append("<tr class=\"additional\"><th>" + lesson + "<\/th><td id=\"" + lesson + "1\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "2\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "3\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "4\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "5\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><\/tr>");
+          lesson++;
+      }); 
+      $("#btn1").click(function(){
+          subject = prompt("Geben Sie bitte einen Farbcode ein.", "Subject");
+          bgColor = prompt("Please enter a color code.", "#ffffff");
+          if(subject===null)subject = "Subject";
+          if(bgColor===null)bgColor = "white";
+          txtColor = pickTextColor(bgColor, "white", "black");
+          $("span#new").append("<div id=\"drag" + number + "\" draggable=\"true\" ondragstart=\"drag(event)\" style=\"background:" + bgColor + ";color:" + txtColor + "\">" + subject + "<\/div>");
+          number++;
+      }); 
+      $("#btn2").click(function(){
+          $('div div').remove(); 
+      }); 
+      $("#btn3").click(function(){
+          $('div').not('div#delete').remove(); 
+      }); 
+      $("#btn4").click(function(){
+          $('.additional').remove();
+          lesson = 7;
+      }); 
+  });
+  function allowDrop(ev) {
+      ev.preventDefault();
+  }
+  function drag(ev) {
+      ev.dataTransfer.setData("text", ev.target.id);
+  }
+  function drop(ev) {
+      ev.preventDefault();
+      var data = ev.dataTransfer.getData("text");
+      ev.target.appendChild(document.getElementById(data));
+  }
+  function pickTextColor(inputColor, lightColor, darkColor) {
+    if(inputColor.charAt(0)==='#'&&inputColor.length===7)var color=inputColor.substring(1,7);
+    else if(inputColor.charAt(0)==='#'&&inputColor.length===4)var color=inputColor[1]+inputColor[1]+inputColor[2]+inputColor[2]+inputColor[3]+inputColor[3];
+    else if(inputColor.toUpperCase()==="BLACK")var color="000000";
+    else if(inputColor.toUpperCase()==="NAVY")var color="000080";
+    else if(inputColor.toUpperCase()==="DARKBLUE")var color="00008B";
+    else if(inputColor.toUpperCase()==="MEDIUMBLUE")var color="0000CD";
+    else if(inputColor.toUpperCase()==="BLUE")var color="0000FF";
+    else if(inputColor.toUpperCase()==="DARKGREEN")var color="006400";
+    else if(inputColor.toUpperCase()==="GREEN")var color="008000";
+    else if(inputColor.toUpperCase()==="TEAL")var color="008080";
+    else if(inputColor.toUpperCase()==="DARKCYAN")var color="008B8B";
+    else if(inputColor.toUpperCase()==="DEEPSKYBLUE")var color="00BFFF";
+    else if(inputColor.toUpperCase()==="DARKTURQUOISE")var color="00CED1";
+    else if(inputColor.toUpperCase()==="MEDIUMSPRINGGREEN")var color="00FA9A";
+    else if(inputColor.toUpperCase()==="LIME")var color="00FF00";
+    else if(inputColor.toUpperCase()==="SPRINGGREEN")var color="00FF7F";
+    else if(inputColor.toUpperCase()==="AQUA")var color="00FFFF";
+    else if(inputColor.toUpperCase()==="CYAN")var color="00FFFF";
+    else if(inputColor.toUpperCase()==="MIDNIGHTBLUE")var color="191970";
+    else if(inputColor.toUpperCase()==="DODGERBLUE")var color="1E90FF";
+    else if(inputColor.toUpperCase()==="LIGHTSEAGREEN")var color="20B2AA";
+    else if(inputColor.toUpperCase()==="FORESTGREEN")var color="228B22";
+    else if(inputColor.toUpperCase()==="SEAGREEN")var color="2E8B57";
+    else if(inputColor.toUpperCase()==="DARKSLATEGRAY")var color="2F4F4F";
+    else if(inputColor.toUpperCase()==="DARKSLATEGREY")var color="2F4F4F";
+    else if(inputColor.toUpperCase()==="LIMEGREEN")var color="32CD32";
+    else if(inputColor.toUpperCase()==="MEDIUMSEAGREEN")var color="3CB371";
+    else if(inputColor.toUpperCase()==="TURQUOISE")var color="40E0D0";
+    else if(inputColor.toUpperCase()==="ROYALBLUE")var color="4169E1";
+    else if(inputColor.toUpperCase()==="STEELBLUE")var color="4682B4";
+    else if(inputColor.toUpperCase()==="DARKSLATEBLUE")var color="483D8B";
+    else if(inputColor.toUpperCase()==="MEDIUMTURQUOISE")var color="48D1CC";
+    else if(inputColor.toUpperCase()==="INDIGO ")var color="4B0082";
+    else if(inputColor.toUpperCase()==="DARKOLIVEGREEN")var color="556B2F";
+    else if(inputColor.toUpperCase()==="CADETBLUE")var color="5F9EA0";
+    else if(inputColor.toUpperCase()==="CORNFLOWERBLUE")var color="6495ED";
+    else if(inputColor.toUpperCase()==="REBECCAPURPLE")var color="663399";
+    else if(inputColor.toUpperCase()==="MEDIUMAQUAMARINE")var color="66CDAA";
+    else if(inputColor.toUpperCase()==="DIMGRAY")var color="696969";
+    else if(inputColor.toUpperCase()==="DIMGREY")var color="696969";
+    else if(inputColor.toUpperCase()==="SLATEBLUE")var color="6A5ACD";
+    else if(inputColor.toUpperCase()==="OLIVEDRAB")var color="6B8E23";
+    else if(inputColor.toUpperCase()==="SLATEGRAY")var color="708090";
+    else if(inputColor.toUpperCase()==="SLATEGREY")var color="708090";
+    else if(inputColor.toUpperCase()==="LIGHTSLATEGRAY")var color="778899";
+    else if(inputColor.toUpperCase()==="LIGHTSLATEGREY")var color="778899";
+    else if(inputColor.toUpperCase()==="MEDIUMSLATEBLUE")var color="7B68EE";
+    else if(inputColor.toUpperCase()==="LAWNGREEN")var color="7CFC00";
+    else if(inputColor.toUpperCase()==="CHARTREUSE")var color="7FFF00";
+    else if(inputColor.toUpperCase()==="AQUAMARINE")var color="7FFFD4";
+    else if(inputColor.toUpperCase()==="MAROON")var color="800000";
+    else if(inputColor.toUpperCase()==="PURPLE")var color="800080";
+    else if(inputColor.toUpperCase()==="OLIVE")var color="808000";
+    else if(inputColor.toUpperCase()==="GRAY")var color="808080";
+    else if(inputColor.toUpperCase()==="GREY")var color="808080";
+    else if(inputColor.toUpperCase()==="SKYBLUE")var color="87CEEB";
+    else if(inputColor.toUpperCase()==="LIGHTSKYBLUE")var color="87CEFA";
+    else if(inputColor.toUpperCase()==="BLUEVIOLET")var color="8A2BE2";
+    else if(inputColor.toUpperCase()==="DARKRED")var color="8B0000";
+    else if(inputColor.toUpperCase()==="DARKMAGENTA")var color="8B008B";
+    else if(inputColor.toUpperCase()==="SADDLEBROWN")var color="8B4513";
+    else if(inputColor.toUpperCase()==="DARKSEAGREEN")var color="8FBC8F";
+    else if(inputColor.toUpperCase()==="LIGHTGREEN")var color="90EE90";
+    else if(inputColor.toUpperCase()==="MEDIUMPURPLE")var color="9370DB";
+    else if(inputColor.toUpperCase()==="DARKVIOLET")var color="9400D3";
+    else if(inputColor.toUpperCase()==="PALEGREEN")var color="98FB98";
+    else if(inputColor.toUpperCase()==="DARKORCHID")var color="9932CC";
+    else if(inputColor.toUpperCase()==="YELLOWGREEN")var color="9ACD32";
+    else if(inputColor.toUpperCase()==="SIENNA")var color="A0522D";
+    else if(inputColor.toUpperCase()==="BROWN")var color="A52A2A";
+    else if(inputColor.toUpperCase()==="DARKGRAY")var color="A9A9A9";
+    else if(inputColor.toUpperCase()==="DARKGREY")var color="A9A9A9";
+    else if(inputColor.toUpperCase()==="LIGHTBLUE")var color="ADD8E6";
+    else if(inputColor.toUpperCase()==="GREENYELLOW")var color="ADFF2F";
+    else if(inputColor.toUpperCase()==="PALETURQUOISE")var color="AFEEEE";
+    else if(inputColor.toUpperCase()==="LIGHTSTEELBLUE")var color="B0C4DE";
+    else if(inputColor.toUpperCase()==="POWDERBLUE")var color="B0E0E6";
+    else if(inputColor.toUpperCase()==="FIREBRICK")var color="B22222";
+    else if(inputColor.toUpperCase()==="DARKGOLDENROD")var color="B8860B";
+    else if(inputColor.toUpperCase()==="MEDIUMORCHID")var color="BA55D3";
+    else if(inputColor.toUpperCase()==="ROSYBROWN")var color="BC8F8F";
+    else if(inputColor.toUpperCase()==="DARKKHAKI")var color="BDB76B";
+    else if(inputColor.toUpperCase()==="SILVER")var color="C0C0C0";
+    else if(inputColor.toUpperCase()==="MEDIUMVIOLETRED")var color="C71585";
+    else if(inputColor.toUpperCase()==="INDIANRED ")var color="CD5C5C";
+    else if(inputColor.toUpperCase()==="PERU")var color="CD853F";
+    else if(inputColor.toUpperCase()==="CHOCOLATE")var color="D2691E";
+    else if(inputColor.toUpperCase()==="TAN")var color="D2B48C";
+    else if(inputColor.toUpperCase()==="LIGHTGRAY")var color="D3D3D3";
+    else if(inputColor.toUpperCase()==="LIGHTGREY")var color="D3D3D3";
+    else if(inputColor.toUpperCase()==="THISTLE")var color="D8BFD8";
+    else if(inputColor.toUpperCase()==="ORCHID")var color="DA70D6";
+    else if(inputColor.toUpperCase()==="GOLDENROD")var color="DAA520";
+    else if(inputColor.toUpperCase()==="PALEVIOLETRED")var color="DB7093";
+    else if(inputColor.toUpperCase()==="CRIMSON")var color="DC143C";
+    else if(inputColor.toUpperCase()==="GAINSBORO")var color="DCDCDC";
+    else if(inputColor.toUpperCase()==="PLUM")var color="DDA0DD";
+    else if(inputColor.toUpperCase()==="BURLYWOOD")var color="DEB887";
+    else if(inputColor.toUpperCase()==="LIGHTCYAN")var color="E0FFFF";
+    else if(inputColor.toUpperCase()==="LAVENDER")var color="E6E6FA";
+    else if(inputColor.toUpperCase()==="DARKSALMON")var color="E9967A";
+    else if(inputColor.toUpperCase()==="VIOLET")var color="EE82EE";
+    else if(inputColor.toUpperCase()==="PALEGOLDENROD")var color="EEE8AA";
+    else if(inputColor.toUpperCase()==="LIGHTCORAL")var color="F08080";
+    else if(inputColor.toUpperCase()==="KHAKI")var color="F0E68C";
+    else if(inputColor.toUpperCase()==="ALICEBLUE")var color="F0F8FF";
+    else if(inputColor.toUpperCase()==="HONEYDEW")var color="F0FFF0";
+    else if(inputColor.toUpperCase()==="AZURE")var color="F0FFFF";
+    else if(inputColor.toUpperCase()==="SANDYBROWN")var color="F4A460";
+    else if(inputColor.toUpperCase()==="WHEAT")var color="F5DEB3";
+    else if(inputColor.toUpperCase()==="BEIGE")var color="F5F5DC";
+    else if(inputColor.toUpperCase()==="WHITESMOKE")var color="F5F5F5";
+    else if(inputColor.toUpperCase()==="MINTCREAM")var color="F5FFFA";
+    else if(inputColor.toUpperCase()==="GHOSTWHITE")var color="F8F8FF";
+    else if(inputColor.toUpperCase()==="SALMON")var color="FA8072";
+    else if(inputColor.toUpperCase()==="ANTIQUEWHITE")var color="FAEBD7";
+    else if(inputColor.toUpperCase()==="LINEN")var color="FAF0E6";
+    else if(inputColor.toUpperCase()==="LIGHTGOLDENRODYELLOW")var color="FAFAD2";
+    else if(inputColor.toUpperCase()==="OLDLACE")var color="FDF5E6";
+    else if(inputColor.toUpperCase()==="RED")var color="FF0000";
+    else if(inputColor.toUpperCase()==="FUCHSIA")var color="FF00FF";
+    else if(inputColor.toUpperCase()==="MAGENTA")var color="FF00FF";
+    else if(inputColor.toUpperCase()==="DEEPPINK")var color="FF1493";
+    else if(inputColor.toUpperCase()==="ORANGERED")var color="FF4500";
+    else if(inputColor.toUpperCase()==="TOMATO")var color="FF6347";
+    else if(inputColor.toUpperCase()==="HOTPINK")var color="FF69B4";
+    else if(inputColor.toUpperCase()==="CORAL")var color="FF7F50";
+    else if(inputColor.toUpperCase()==="DARKORANGE")var color="FF8C00";
+    else if(inputColor.toUpperCase()==="LIGHTSALMON")var color="FFA07A";
+    else if(inputColor.toUpperCase()==="ORANGE")var color="FFA500";
+    else if(inputColor.toUpperCase()==="LIGHTPINK")var color="FFB6C1";
+    else if(inputColor.toUpperCase()==="PINK")var color="FFC0CB";
+    else if(inputColor.toUpperCase()==="GOLD")var color="FFD700";
+    else if(inputColor.toUpperCase()==="PEACHPUFF")var color="FFDAB9";
+    else if(inputColor.toUpperCase()==="NAVAJOWHITE")var color="FFDEAD";
+    else if(inputColor.toUpperCase()==="MOCCASIN")var color="FFE4B5";
+    else if(inputColor.toUpperCase()==="BISQUE")var color="FFE4C4";
+    else if(inputColor.toUpperCase()==="MISTYROSE")var color="FFE4E1";
+    else if(inputColor.toUpperCase()==="BLANCHEDALMOND")var color="FFEBCD";
+    else if(inputColor.toUpperCase()==="PAPAYAWHIP")var color="FFEFD5";
+    else if(inputColor.toUpperCase()==="LAVENDERBLUSH")var color="FFF0F5";
+    else if(inputColor.toUpperCase()==="SEASHELL")var color="FFF5EE";
+    else if(inputColor.toUpperCase()==="CORNSILK")var color="FFF8DC";
+    else if(inputColor.toUpperCase()==="LEMONCHIFFON")var color="FFFACD";
+    else if(inputColor.toUpperCase()==="FLORALWHITE")var color="FFFAF0";
+    else if(inputColor.toUpperCase()==="SNOW")var color="FFFAFA";
+    else if(inputColor.toUpperCase()==="YELLOW")var color="FFFF00";
+    else if(inputColor.toUpperCase()==="LIGHTYELLOW")var color="FFFFE0";
+    else if(inputColor.toUpperCase()==="IVORY")var color="FFFFF0";
+    else if(inputColor.toUpperCase()==="WHITE")var color="FFFFFF";
+    else var color="ffffff";
+    var r=parseInt(color.substring(0,2),16);
+    var g=parseInt(color.substring(2,4),16);
+    var b=parseInt(color.substring(4,6),16);
+    return (((r*0.299)+(g*0.587)+(b*0.114))>186)?
+      darkColor:lightColor;
+  }
+  </script>
+  <h2>Printing</h2>
+  <button onclick="window.print()">Print timetable</button>
+  <p style="color:grey">&#9888; In some browsers the color printing must be activated!</p>
+  <h2>Issues</h2>
+  <ul>
+    <li>Does not work with touch screens</li>
+  </ul>  
+  <h2>Planned</h2>
+  <ul>
+    <li>Support touch screens</li>
+    <li>Save and load</li>
+  </ul>  
+</body>
+</html>

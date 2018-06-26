@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+  <title>Timetable-Software</title>
+	<meta charset="utf-8">  
+	<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>'>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+  * {
+      box-sizing: border-box;
+  }
+  html, body {
+      font-family: arial, sans-serif;
+      height: 100%;
+      width: 100%;
+      max-width:720px;
+      margin: 0 auto;
+  }
+  input {
+      background-color: DodgerBlue;
+      color: white;
+      border: 2px solid DodgerBlue;
+      padding: 10px 24px;
+      text-align: center;
+      margin: 4px 0;
+      transition-duration: 0.5s;
+      cursor: pointer;
+      outline: none;  
+  }
+  input:hover {
+      background-color: white; 
+      color: black; 
+  }
+  form {
+      display: inline-block;
+  }
+  </style>
+</head>
+<body>
+  <h1>Timetable-Software</h1>
+  <noscript><h2 style="color:red">Bitte aktivieren Sie JavaScript</h2></noscript>
+  <p>
+    Timetable-Software is a software for creating and printing your timetable.<br>
+    The software is available in English and German. You can find links to the websites below.
+  </p>
+  <form action="./en"><input type="submit" value="English version" /></form>
+  <form action="./de"><input type="submit" value="Deutsche Version" /></form>
+</body>
+</html>
