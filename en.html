@@ -74,7 +74,7 @@
   }
   @media print {
       @page {size: landscape;margin:0;}
-      h1, h2, button, div#delete, span, p, ul {
+      h1, h2, button, div#delete, span, p:not(.copy), ul {
           display: none;
       }
       html, body {
@@ -354,5 +354,6 @@
     <li>Support touch screens</li>
     <li>Save and load</li>
   </ul>  
+  <p style="color:grey" class="copy">&#9400; Copyright 2018 Dominik Reichl</p><br>
 </body>
 </html>
