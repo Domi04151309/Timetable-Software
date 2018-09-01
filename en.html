@@ -48,23 +48,30 @@
   }
   div {
     padding: 8px;
+    cursor: pointer;
   }
-  button {
+  button, .input-file {
     background-color: DodgerBlue;
     color: white;
     border: 2px solid DodgerBlue;
     padding: 10px 24px;
+    font:14px arial, sans-serif;
+    vertical-align: middle;
     text-align: center;
     margin: 4px 0;
     transition-duration: 0.5s;
     cursor: pointer;
     outline: none;  
   }
-  button:hover {
+  button:hover, .input-file:hover {
     background-color: white; 
     color: black; 
   }
+  input[type="file"] {
+    display: none;
+  }
   div#delete {
+    cursor: auto;
     min-height: 116px;
     width: 100%;
     padding: 0 0 28px 0;
@@ -144,6 +151,9 @@
   <button id="btn2">Empty trash</button>
   <button id="btn3">Delete all subjects</button>
   <button id="btn4">Delete all additional lessons</button>
+  <h2>Saving and Loading</h2>
+  <button onClick="save()">Save</button>
+  <label class="input-file"><input id="load" type="file" onchange="load()" accept=".json">Load</label>
   <script>
   function isTouchDevice() {
     var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
@@ -158,12 +168,11 @@
   }
   if(isTouchDevice())
     alert("This service does not work on touch-screens!");
-  var lesson = 7;
+  var lesson = 6;
   var number = 0;
   $(document).ready(function(){
       $("#btn0").click(function(){
-          $("table").append("<tr class=\"additional\"><th>" + lesson + "<\/th><td id=\"" + lesson + "1\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "2\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "3\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "4\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "5\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><\/tr>");
-          lesson++;
+        addLesson();
       }); 
       $("#btn1").click(function(){
           subject = prompt("Please enter the subject.", "Subject");
@@ -182,9 +191,13 @@
       }); 
       $("#btn4").click(function(){
           $('.additional').remove();
-          lesson = 7;
+          lesson = 6;
       }); 
   });
+  function addLesson() {
+    lesson++;
+    $("table").append("<tr class=\"additional\"><th>" + lesson + "<\/th><td id=\"" + lesson + "1\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "2\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "3\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "4\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><td id=\"" + lesson + "5\" ondrop=\"drop(event)\" ondragover=\"allowDrop(event)\"><\/td><\/tr>");
+  }
   function allowDrop(ev) {
       ev.preventDefault();
   }
@@ -354,6 +367,59 @@
     return (((r*0.299)+(g*0.587)+(b*0.114))>186)?
       darkColor:lightColor;
   }
+  function getExtension(filename) {
+    var parts = filename.split('.');
+    return parts[parts.length - 1];
+  }
+  function save(){
+    var saveArr = [lesson];
+    for (i = 1; i <= lesson; i++) {
+      saveArr[saveArr.length] = document.getElementById(String(i) + "1").innerHTML;
+      saveArr[saveArr.length] = document.getElementById(String(i) + "2").innerHTML;
+      saveArr[saveArr.length] = document.getElementById(String(i) + "3").innerHTML;
+      saveArr[saveArr.length] = document.getElementById(String(i) + "4").innerHTML;
+      saveArr[saveArr.length] = document.getElementById(String(i) + "5").innerHTML;
+    }
+    var hiddenElement = document.createElement('a');
+    hiddenElement.href = 'data:attachment/text,' + encodeURI(JSON.stringify(saveArr));
+    hiddenElement.target = '_blank';
+    hiddenElement.download = 'Timetable.json';
+    hiddenElement.click();
+  }
+  function load(){
+    var file = document.getElementById('load').files[0];
+    var ext = getExtension(document.getElementById('load').value);
+    if (file && ext.toLowerCase() == 'json') {
+      var reader = new FileReader();
+      reader.readAsText(file, 'UTF-8');
+      reader.onload = function (evt) {
+        var loadArr = JSON.parse(reader.result);
+        lesson = 6;
+        $('.additional').remove();
+        $('div').not('div#delete').remove();
+        for (i = 0; i < loadArr[0] - 6; i++) {
+          addLesson();
+        }
+        var pos = 1;
+        for (i = 1; i <= loadArr[0]; i++) {
+          document.getElementById(String(i) + "1").innerHTML = loadArr[pos];
+          pos++;
+          document.getElementById(String(i) + "2").innerHTML = loadArr[pos];
+          pos++;
+          document.getElementById(String(i) + "3").innerHTML = loadArr[pos];
+          pos++;
+          document.getElementById(String(i) + "4").innerHTML = loadArr[pos];
+          pos++;
+          document.getElementById(String(i) + "5").innerHTML = loadArr[pos];
+          pos++;
+        }
+      }
+      reader.onerror = function (evt) {
+        document.getElementById('11').innerHTML = evt;
+      }
+    } else if (file && ext.toLowerCase() != 'json')
+      alert('The selected file format is not supported!');
+  }
   </script>
   <h2>Printing</h2>
   <button onclick="window.print()">Print timetable</button>
@@ -365,7 +431,6 @@
   <h2>Planned</h2>
   <ul>
     <li>Support touch screens</li>
-    <li>Save and load</li>
   </ul>  
   <p style="color:grey" class="copy">&#9400; Copyright 2018 Dominik Reichl</p><br>
 </body>
