@@ -8,79 +8,79 @@
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <style>
   * {
-      box-sizing: border-box;
+    box-sizing: border-box;
   }
   html, body {
-      font-family: arial, sans-serif;
-      height: 100%;
-      width: 100%;
+    font-family: arial, sans-serif;
+    height: 100%;
+    width: 100%;
   }
   body {
-      max-width:720px;
-      padding: 0 10px;
-      margin: 0 auto;
+    max-width: 720px;
+    padding: 0 10px;
+    margin: 0 auto;
   }
   table {
-      border-collapse: collapse;
-      width: 100%;
-      -webkit-print-color-adjust: exact; 
-      printer-colors: exact;
-      color-adjust: exact;
+    border-collapse: collapse;
+    width: 100%;
+    -webkit-print-color-adjust: exact; 
+    printer-colors: exact;
+    color-adjust: exact;
   }
   td, th, div {
-      border: 1px solid Gainsboro;
-      text-align: center;
-      width: 16%
+    border: 1px solid Gainsboro;
+    text-align: center;
+    width: 16%
   }
   th {
-      border: 1px solid #000;
-      background: black;
-      color: white;
-      padding: 8px;
+    border: 1px solid #000;
+    background: black;
+    color: white;
+    padding: 8px;
   }
   td > div { 
-      border: none;
-      width: 100%;
+    border: none;
+    width: 100%;
   }
   div > div {
-      border: 2px solid FireBrick;
-      width: 100%;
+    border: 2px solid FireBrick;
+    width: 100%;
   }
   div {
-      padding: 8px;
+    padding: 8px;
   }
   button {
-      background-color: DodgerBlue;
-      color: white;
-      border: 2px solid DodgerBlue;
-      padding: 10px 24px;
-      text-align: center;
-      margin: 4px 0;
-      transition-duration: 0.5s;
-      cursor: pointer;
-      outline: none;  
+    background-color: DodgerBlue;
+    color: white;
+    border: 2px solid DodgerBlue;
+    padding: 10px 24px;
+    text-align: center;
+    margin: 4px 0;
+    transition-duration: 0.5s;
+    cursor: pointer;
+    outline: none;  
   }
   button:hover {
-      background-color: white; 
-      color: black; 
+    background-color: white; 
+    color: black; 
   }
   div#delete {
-      height: 8vw;
-      width: 100%;
-      padding: 0;
-      border: 2px solid FireBrick;
-      background-color: FireBrick;
-      overflow: auto;
+    min-height: 116px;
+    width: 100%;
+    padding: 0 0 28px 0;
+    border: 2px solid FireBrick;
+    background-color: FireBrick;
+    overflow: auto;
   }
   @media print {
-      @page {size: landscape;margin:0;}
-      h1, h2, button, div#delete, span, p:not(.copy), ul {
-          display: none;
-      }
-      html, body {
-          max-width: 100%;
-          padding: 32px;
-      }
+    @page {size: landscape;margin:0;}
+    h1, h2, button, div#delete, span, p:not(.copy), ul {
+      display: none;
+    }
+    html, body {
+      max-width: 100%;
+      padding: 32px;
+    }
   }
   </style>
 </head>
@@ -145,6 +145,19 @@
   <button id="btn3">Alle F&auml;cher l&ouml;schen</button>
   <button id="btn4">Alle zus&auml;tzlichen Stunden l&ouml;schen</button>
   <script>
+  function isTouchDevice() {
+    var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
+    var mq = function(query) {
+      return window.matchMedia(query).matches;
+    }
+    if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
+      return true;
+    }
+    var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
+    return mq(query);
+  }
+  if(isTouchDevice())
+    alert("Dieses Programm funktioniert auf Touch-Bildschirmen nicht!");
   var lesson = 7;
   var number = 0;
   $(document).ready(function(){
