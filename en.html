@@ -373,6 +373,7 @@
   }
   function save(){
     var saveArr = [lesson];
+    saveArr[saveArr.length] = number;
     for (i = 1; i <= lesson; i++) {
       saveArr[saveArr.length] = document.getElementById(String(i) + "1").innerHTML;
       saveArr[saveArr.length] = document.getElementById(String(i) + "2").innerHTML;
@@ -394,13 +395,14 @@
       reader.readAsText(file, 'UTF-8');
       reader.onload = function (evt) {
         var loadArr = JSON.parse(reader.result);
+        number = loadArr[1];
         lesson = 6;
         $('.additional').remove();
         $('div').not('div#delete').remove();
         for (i = 0; i < loadArr[0] - 6; i++) {
           addLesson();
         }
-        var pos = 1;
+        var pos = 2;
         for (i = 1; i <= loadArr[0]; i++) {
           document.getElementById(String(i) + "1").innerHTML = loadArr[pos];
           pos++;
