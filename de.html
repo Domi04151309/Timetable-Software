@@ -155,19 +155,6 @@
   <button onClick="save()">Speichern</button>
   <label class="input-file"><input id="load" type="file" onchange="load()" accept=".json">Laden</label>
   <script>
-  function isTouchDevice() {
-    var prefixes = ' -webkit- -moz- -o- -ms- '.split(' ');
-    var mq = function(query) {
-      return window.matchMedia(query).matches;
-    }
-    if (('ontouchstart' in window) || window.DocumentTouch && document instanceof DocumentTouch) {
-      return true;
-    }
-    var query = ['(', prefixes.join('touch-enabled),('), 'heartz', ')'].join('');
-    return mq(query);
-  }
-  if(isTouchDevice())
-    alert("Dieses Programm funktioniert auf Touch-Bildschirmen nicht!");
   var lesson = 6;
   var number = 0;
   $(document).ready(function(){
@@ -426,14 +413,6 @@
   <h2>Drucken</h2>
   <button onclick="window.print()">Stundenplan ausdrucken</button>
   <p style="color:grey">&#9888; In manchen Browsern muss das Mitdrucken der Farben aktiviert werden!</p>
-  <h2>Probleme</h2>
-  <ul>
-    <li>Funktioniert nicht bei Touch-Bildschirmen</li>
-  </ul>  
-  <h2>Geplant</h2>
-  <ul>
-    <li>Touch-Bildschirme unterst&uuml;tzen</li>
-  </ul>
   <p style="color:grey" class="copy">&#9400; Copyright 2018 Dominik Reichl</p><br>
 </body>
 </html>
