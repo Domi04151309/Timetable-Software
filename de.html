@@ -5,6 +5,7 @@
 	<meta charset="utf-8">  
 	<link rel="icon" href='data:image/svg+xml;utf8,<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"><path d="M0 0h24v24H0z" fill="none"/><path d="M5 13.18v4L12 21l7-3.82v-4L12 17l-7-3.82zM12 3L1 9l11 6 9-4.91V17h2V9L12 3z"/></svg>'>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="manifest" href="/Timetable-Software/pwa/manifest_de.json">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <style>
   * {
@@ -19,6 +20,9 @@
     max-width: 720px;
     padding: 0 10px;
     margin: 0 auto;
+  }
+  .table{
+    overflow: auto;
   }
   table {
     border-collapse: collapse;
@@ -42,7 +46,7 @@
     border: none;
     width: 100%;
   }
-  div > div {
+  #delete > div {
     border: 2px solid FireBrick;
     width: 100%;
   }
@@ -70,7 +74,7 @@
   input[type="file"] {
     display: none;
   }
-  div#delete {
+  #delete {
     cursor: auto;
     min-height: 116px;
     width: 100%;
@@ -81,7 +85,7 @@
   }
   @media print {
     @page {size: landscape;margin:0;}
-    h1, h2, button, .input-file, div#delete, span, p:not(.copy), ul {
+    h1, h2, button, .input-file, #delete, span, p:not(.copy), ul {
       display: none;
     }
     html, body {
@@ -94,7 +98,7 @@
 <body>
   <h1>Stundenplan</h1>
   <noscript><h2 style="color:red">Bitte aktivieren Sie JavaScript</h2></noscript>
-  <table>
+  <section class="table"><table>
     <tr>
       <th></th>
       <th>Montag</th>
@@ -139,7 +143,7 @@
       <td id="63" ondrop="drop(event)" ondragover="allowDrop(event)"></td><td id="64" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
       <td id="65" ondrop="drop(event)" ondragover="allowDrop(event)"></td>
     </tr>
-  </table>
+  </table></section>
   <h2>F&auml;cher</h2>
   <button id="btn1">Fach hinzufügen</button>
   <button id="btn0">Stunde hinzufügen</button>
@@ -147,7 +151,7 @@
   <span id="new">
   </span>
   <h2>L&ouml;schen</h2>
-  <div id="delete" ondrop="drop(event)" ondragover="allowDrop(event)"></div>
+  <section id="delete" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
   <button id="btn2">Papierkorb leeren</button>
   <button id="btn3">Alle F&auml;cher l&ouml;schen</button>
   <button id="btn4">Alle zus&auml;tzlichen Stunden l&ouml;schen</button>
@@ -171,10 +175,10 @@
           number++;
       }); 
       $("#btn2").click(function(){
-          $('div div').remove(); 
+          $('#delete div').remove(); 
       }); 
       $("#btn3").click(function(){
-          $('div').not('div#delete').remove(); 
+          $('div').remove(); 
       }); 
       $("#btn4").click(function(){
           $('.additional').remove();
@@ -385,7 +389,7 @@
         number = loadArr[1];
         lesson = 6;
         $('.additional').remove();
-        $('div').not('div#delete').remove();
+        $('div').remove();
         for (i = 0; i < loadArr[0] - 6; i++) {
           addLesson();
         }
