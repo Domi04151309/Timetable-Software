@@ -35,9 +35,9 @@
     }
   ],
   "start_url": "/Timetable-Software/en",
-  "background_color": "#000",
+  "background_color": "#fff",
   "display": "standalone",
   "orientation": "portrait",
   "scope": "/Timetable-Software/",
-  "theme_color": "#1e90ff"
+  "theme_color": "#fff"
 }
