@@ -95,6 +95,12 @@
     border: 2px solid #dcdcdc;
     overflow: auto;
   }
+  .grey {
+    color: #808080;
+  }
+  .print {
+    display: none;
+  }
   @media only screen and (max-width: 600px) {
     header{position:fixed;top:0;height:56px;width:100%;background:#fff;overflow:hidden;box-shadow:0 0 8px rgba(0,0,0,.5);z-index:50;}
     h1{height:100%;display:inline-block;padding:0 8px;font-weight:400;font-size:1.17em;color:#1e90ff;line-height:56px;margin:0;}
@@ -102,8 +108,13 @@
   }
   @media print {
     @page {size: landscape;margin:0;}
-    h1, h2, button, .input-file, #delete, #edit, span, p:not(.copy), ul {
+    h1, h2, button, .input-file, #delete, #edit, span, p:not(.print), ul, .copy {
       display: none;
+    }
+    .print {
+      display: block;
+      text-align: right;
+      color: #dcdcdc;
     }
     html, body {
       max-width: 100%;
@@ -172,7 +183,7 @@
     <h2>Subjects</h2>
     <button id="btn1">Add subject</button>
     <button id="btn0">Add lesson</button>
-    <p style="color:grey">Drag and drop the subjects into the table!</p>
+    <p class="grey">Drag and drop the subjects into the table!</p>
     <span id="new">
     </span>
     <h2>Deleting</h2>
@@ -465,8 +476,10 @@
     </script>
     <h2>Printing</h2>
     <button onclick="window.print()">Print timetable</button>
-    <p style="color:grey">&#9888; In some browsers the color printing has to be activated!</p>
-    <p style="color:grey" class="copy">&#9400; Copyright 2018 Dominik Reichl</p><br>
+    <p class="grey">&#9888; In some browsers the color printing has to be activated!</p>
+    <p class="copy grey">&#9400; Copyright 2018 Dominik Reichl</p>
+    <p class="print">Created with Timetable-Software by Domi04151309</p>
+    <br>
   </article>
 </body>
 </html>
