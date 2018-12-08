@@ -58,7 +58,7 @@
   }
   div {
     padding: 8px;
-    cursor: pointer;
+    cursor: move;
   }
   button, .input-file {
     background-color: #1e90ff;
@@ -105,6 +105,8 @@
     header{position:fixed;top:0;height:56px;width:100%;background:#fff;overflow:hidden;box-shadow:0 0 8px rgba(0,0,0,.5);z-index:50;}
     h1{height:100%;display:inline-block;padding:0 8px;font-weight:400;font-size:1.17em;color:#1e90ff;line-height:56px;margin:0;}
     article{margin-top:66px;}
+    button,.input-file,#delete,#edit{border-radius:2px;}
+    button,.input-file{border:2px solid #1e90ff;padding:8px 16px;box-shadow:0 3px 1px -2px rgba(0,0,0,.2),0 2px 2px 0 rgba(0,0,0,.14),0 1px 5px 0 rgba(0,0,0,.12);}
   }
   @media print {
     @page {size: landscape;margin:0;}
