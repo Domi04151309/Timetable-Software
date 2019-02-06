@@ -1,9 +1,10 @@
 <!doctype html>
-<html>
+<html lang="en">
 <head>
   <title>Timetable-Software</title>
 	<meta charset="utf-8">  
 	<meta name="theme-color" content="#fff">
+  <meta name="description" content="Timetable-Software is a software for creating and printing your timetable. The software is available in English and German." />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="/Timetable-Software/pwa/manifest_en.json">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -483,5 +484,16 @@
     <p class="print">Created with Timetable-Software by Domi04151309</p>
     <br>
   </article>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/Timetable-Software/sw.js').then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>

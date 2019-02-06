@@ -1,9 +1,10 @@
 <!doctype html>
-<html>
+<html lang="de">
 <head>
   <title>Stundenplan-Software</title>
 	<meta charset="utf-8">  
 	<meta name="theme-color" content="#fff">
+  <meta name="description" content="Stundenplan-Software ermöglicht es dir deinen Stundenplan zu erstellen und auszudrucken. Das Programm ist auf deutsch und auf englisch verfügbar" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="manifest" href="/Timetable-Software/pwa/manifest_de.json">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
@@ -483,5 +484,16 @@
     <p class="print">Erstellt mit Stundenplan-Software von Domi04151309</p>
     <br>
   </article>
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/Timetable-Software/sw.js').then(function(registration) {
+          console.log('ServiceWorker registration successful with scope: ', registration.scope);
+        }, function(err) {
+          console.log('ServiceWorker registration failed: ', err);
+        });
+      });
+    }
+  </script>
 </body>
 </html>
