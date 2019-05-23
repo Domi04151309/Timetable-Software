@@ -71,7 +71,7 @@
     let newWorker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+        navigator.serviceWorker.register('/Timetable-Software/sw.js').then(function(registration) {
            registration.addEventListener('updatefound', () => {
             newWorker = registration.installing;
             newWorker.addEventListener('statechange', () => {
