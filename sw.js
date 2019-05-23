@@ -7,10 +7,10 @@ var urlsToCache = [
   '{{ site.baseurl }}/?lang=en',
   '{{ site.baseurl }}/?lang=de',
   '{{ site.baseurl }}/offline',
-  '{{ site.baseurl }}/css/main.css'
+  '{{ site.baseurl }}/css/main.css',
   '{{ site.baseurl }}/js/main.js',
   '{{ site.baseurl }}/js/strings_en.js',
-  '{{ site.baseurl }}/js/strings_de.js',
+  '{{ site.baseurl }}/js/strings_de.js'
 ];
 
 self.addEventListener('install', function(event) {
