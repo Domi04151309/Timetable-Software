@@ -1,8 +1,16 @@
-var CACHE_NAME = 'timetable-cache-v1';
+---
+# Service worker for Jekyll
+---
+var CACHE_NAME = 'timetable-cache-{{ site.time | date: "%Y-%m-%d-%H:%M" }}';
 var urlsToCache = [
-  '/Timetable-Software/',
-  '/Timetable-Software/en',
-  '/Timetable-Software/de'
+  '{{ site.baseurl }}/',
+  '{{ site.baseurl }}/?lang=en',
+  '{{ site.baseurl }}/?lang=de',
+  '{{ site.baseurl }}/offline',
+  '{{ site.baseurl }}/css/main.css'
+  '{{ site.baseurl }}/js/main.js',
+  '{{ site.baseurl }}/js/strings_en.js',
+  '{{ site.baseurl }}/js/strings_de.js',
 ];
 
 self.addEventListener('install', function(event) {
@@ -15,37 +23,43 @@ self.addEventListener('install', function(event) {
   );
 });
 
+self.addEventListener('message', function (event) {
+  if (event.data.action === 'skipWaiting') {
+    self.skipWaiting();
+  }
+});
+
 self.addEventListener('fetch', function(event) {
   event.respondWith(
-    caches.match(event.request)
-      .then(function(response) {
-        if (response) {
-          return response;
-        }
+    caches.match(event.request).then(function(response) {
+      if (response) {
+        return response;
+      }
 
-        return fetch(event.request).then(
-          function(response) {
-            if(!response || response.status !== 200 || response.type !== 'basic') {
-              return response;
-            }
-
-            var responseToCache = response.clone();
-
-            caches.open(CACHE_NAME)
-              .then(function(cache) {
-                cache.put(event.request, responseToCache);
-              });
-
+      return fetch(event.request).then(
+        function(response) {
+          if(!response || response.status !== 200 || response.type !== 'basic') {
             return response;
           }
-        );
-      })
-    );
+
+          var responseToCache = response.clone();
+
+          caches.open(CACHE_NAME).then(function(cache) {
+            cache.put(event.request, responseToCache);
+          });
+            
+          return response;
+        }
+      );
+    }).catch(function() {
+      return caches.match('{{ site.baseurl }}/offline');
+    })
+  );
 });
 
 self.addEventListener('activate', function(event) {
 
-  var cacheWhitelist = ['timetable-cache-v1'];
+  var cacheWhitelist = [CACHE_NAME];
 
   event.waitUntil(
     caches.keys().then(function(cacheNames) {

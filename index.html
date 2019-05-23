@@ -1,65 +1,100 @@
 <!doctype html>
-<html  lang="en">
+<html>
 <head>
   <title>Timetable-Software</title>
-	<meta charset="utf-8">  
+	<meta charset="utf-8">
 	<meta name="theme-color" content="#fff">
-  <meta name="description" content="Timetable-Software is a software for creating and printing your timetable. The software is available in English and German." />
+  <meta name="description" content="" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link rel="manifest" href="/Timetable-Software/pwa/manifest_en.json">
-  <style>
-  * {
-      box-sizing: border-box;
-  }
-  html, body {
-      font-family: arial, sans-serif;
-      height: 100%;
-      width: 100%;
-  }
-  body {
-      max-width:720px;
-      padding: 0 10px;
-      margin: 0 auto;
-  }
-  input {
-      background-color: DodgerBlue;
-      color: white;
-      border: 2px solid DodgerBlue;
-      padding: 10px 24px;
-      text-align: center;
-      margin: 4px 0;
-      transition-duration: 0.5s;
-      cursor: pointer;
-      outline: none;  
-  }
-  input:hover {
-      background-color: white; 
-      color: black; 
-  }
-  form {
-      display: inline-block;
-  }
-  </style>
+  <link rel="stylesheet" type="text/css" href="./css/main.css" />
+  <link rel="manifest" id="manifest">
 </head>
 <body>
-  <h1>Timetable-Software</h1>
-  <noscript><h2 style="color:red">Bitte aktivieren Sie JavaScript</h2></noscript>
-  <p>
-    Timetable-Software is a software for creating and printing your timetable.<br>
-    The software is available in English and German. You can find links to the websites below.
-  </p>
-  <form action="./en"><input type="submit" value="English version" /></form>
-  <form action="./de"><input type="submit" value="Deutsche Version" /></form>
+  <header>
+    <h1 id="timetable"></h1>
+  </header>
+  <article>
+    <section id="loading_screen">
+      <div id="loading_content">
+        <div class="balls">
+          <div></div><div></div><div></div><div></div>
+        </div>
+        <p class="grey">Loading</p>
+        <noscript><p style="color:#e00">Please enable JavaScript</p></noscript>
+      </div>
+    </section>
+    <section class="table"><table>
+      <tr>
+        <th></th>
+        <th id="monday"></th>
+        <th id="tuesday"></th>
+        <th id="wednesday"></th>
+        <th id="thursday"></th>
+        <th id="friday"></th>
+      </tr>
+    </table></section>
+
+    <h2 id="subjects"></h2>
+    <button id="add_subject" onclick="addSubject()"></button>
+    <button id="add_lesson" onclick="addLesson()"></button>
+    <p id="drag_and_drop" class="grey"></p>
+    <span id="new"></span>
+
+    <h2 id="deleting"></h2>
+    <section id="delete" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
+    <button id="empty_trash" onclick="emptyTrash()"></button>
+    <button id="delete_all_subjects" onclick="deleteAllSubjects()"></button>
+    <button id="delete_all_additional_lessons" onclick="deleteAllAdditionalLessons()"></button>
+
+    <h2 id="editing"></h2>
+    <section id="edit" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
+    <button id="change_name" onclick="changeName()"></button>
+    <button id="change_color" onclick="changeColor()"></button>
+
+    <h2 id="saving_and_loading"></h2>
+    <button id="save" onClick="save()"></button>
+    <label id="load_label" class="input-file"></label>
+
+    <h2 id="printing"></h2>
+    <button id="print_timetable" onclick="window.print()"></button>
+    <p id="printing_color_warning" class="grey"></p>
+
+    <h2 id="language"></h2>
+    <button id="english" onClick="setLanguage('en')"></button>
+    <button id="german" onClick="setLanguage('de')"></button>
+
+    <p id="copyright" class="grey"></p>
+    <p id="created_with"></p>
+    <br>
+  </article>
   <script>
+    let newWorker
     if ('serviceWorker' in navigator) {
       window.addEventListener('load', function() {
-        navigator.serviceWorker.register('/Timetable-Software/sw.js').then(function(registration) {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+           registration.addEventListener('updatefound', () => {
+            newWorker = registration.installing;
+            newWorker.addEventListener('statechange', () => {
+              if (newWorker.state == 'installed' && navigator.serviceWorker.controller) {
+                newWorker.postMessage({ action: 'skipWaiting' });
+              }
+            });
+          });
           console.log('ServiceWorker registration successful with scope: ', registration.scope);
         }, function(err) {
           console.log('ServiceWorker registration failed: ', err);
         });
       });
+
+      let refreshing;
+      navigator.serviceWorker.addEventListener('controllerchange', function () {
+        if (refreshing) return;
+        window.location.reload();
+        refreshing = true;
+      });
     }
   </script>
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <script src="./js/main.js" async></script>
 </body>
 </html>

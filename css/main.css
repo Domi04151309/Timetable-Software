@@ -1,0 +1,198 @@
+:root {
+  --accent-color: #1e90ff;
+}
+* {
+  box-sizing: border-box;
+}
+html, body {
+  font-family: arial, sans-serif;
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+}
+article, header {
+  max-width: 720px;
+  padding: 0 10px;
+  margin: 0 auto;
+}
+.table{
+  overflow: auto;
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  -webkit-print-color-adjust: exact;
+  printer-colors: exact;
+  color-adjust: exact;
+}
+td, th, .subject {
+  border: 1px solid #dcdcdc;
+  text-align: center;
+  width: 16%
+}
+th {
+  border: 1px solid #000;
+  background: #000;
+  color: #fff;
+  padding: 8px;
+}
+td > .subject {
+  border: none;
+  width: 100%;
+}
+#delete > .subject {
+  border: 2px solid #b22222;
+  width: 100%;
+}
+#edit > .subject {
+  width: calc(100% - 4px);
+  margin: 2px 2px 0 2px;
+}
+.subject {
+  padding: 8px;
+  cursor: move;
+}
+button, .input-file {
+  background-color: var(--accent-color);
+  color: #fff;
+  border: 2px solid var(--accent-color);
+  padding: 10px 24px;
+  font:14px arial, sans-serif;
+  vertical-align: middle;
+  text-align: center;
+  margin: 4px 0;
+  transition-duration: 0.5s;
+  cursor: pointer;
+  outline: none;
+}
+button:hover, .input-file:hover {
+  background-color: #fff;
+  color: #000;
+}
+input[type="file"], #created_with {
+  display: none;
+}
+#delete {
+  min-height: 116px;
+  width: 100%;
+  padding: 0 0 28px 0;
+  border: 2px solid #b22222;
+  background-color: #b22222;
+  overflow: auto;
+}
+#edit {
+  min-height: 116px;
+  width: 100%;
+  padding: 0 0 28px 0;
+  border: 2px solid #dcdcdc;
+  overflow: auto;
+}
+.grey {
+  color: #767676;
+}
+#loading_screen {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: #fff;
+  z-index: 100;
+}
+#loading_content {
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+}
+#loading_content > p {
+  margin-top: 64px;
+  text-align: center;
+}
+.balls {
+  width: 96px;
+  display: flex;
+  margin: auto;
+  flex-flow: row nowrap;
+  align-items: center;
+  justify-content: space-between;
+}
+.balls div {
+  width: 16px;
+  height: 16px;
+  margin: 4px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  transform: translateY(-100%);
+  animation: wave 0.8s ease-in-out alternate infinite;
+}
+.balls div:nth-of-type(1) {
+  animation-delay: -0.8s;
+}
+.balls div:nth-of-type(2) {
+  animation-delay: -0.4s;
+}
+.balls div:nth-of-type(3) {
+  animation-delay: -0.2s;
+}
+@keyframes wave {
+  from {transform: translateY(-100%);}
+  to {transform: translateY(100%);}
+}
+@media only screen and (max-width: 600px) {
+  header {
+    position: fixed;
+    top: 0;
+    height: 56px;
+    width: 100%;
+    background: #fff;
+    overflow: hidden;
+    box-shadow: 0 0 8px rgba(0,0,0,.5);
+    z-index: 50;
+  }
+  h1 {
+    height:100%;
+    display: inline-block;
+    padding: 0 8px;
+    font-weight: 400;
+    font-size: 1.17em;
+    color: var(--accent-color);
+    line-height: 56px;
+    margin: 0;
+  }
+  article {
+    margin-top: 66px;
+  }
+  button, .input-file, #delete, #edit {
+    border-radius: 2px;
+  }
+  button, .input-file {
+    border: 2px solid var(--accent-color);
+    padding: 8px 16px;
+    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
+  }
+}
+@media print {
+  @page {
+    size: landscape;
+    margin: 0;
+  }
+  h1, h2, button, .input-file, #delete, #edit, span, p:not(#created_with), ul, #copyright {
+    display: none;
+  }
+  #created_with {
+    display: block;
+    text-align: right;
+    color: #dcdcdc;
+  }
+  html, body {
+    max-width: 100%;
+    padding: 32px;
+  }
+  article, header {
+    max-width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+}

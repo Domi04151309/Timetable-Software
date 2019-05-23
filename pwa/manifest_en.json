@@ -4,37 +4,37 @@
   "description": "Timetable-Software is a software for creating and printing your timetable. The software is available in English and German.",
   "icons": [
     {
-      "src": "/Timetable-Software/pwa/mipmap-mdpi/ic_launcher.png",
+      "src": "./mipmap-mdpi/ic_launcher.png",
       "type": "image/png",
       "sizes": "48x48"
     },
     {
-      "src": "/Timetable-Software/pwa/mipmap-hdpi/ic_launcher.png",
+      "src": "./mipmap-hdpi/ic_launcher.png",
       "type": "image/png",
       "sizes": "72x72"
     },
     {
-      "src": "/Timetable-Software/pwa/mipmap-xhdpi/ic_launcher.png",
+      "src": "./mipmap-xhdpi/ic_launcher.png",
       "type": "image/png",
       "sizes": "96x96"
     },
     {
-      "src": "/Timetable-Software/pwa/mipmap-xxhdpi/ic_launcher.png",
+      "src": "./mipmap-xxhdpi/ic_launcher.png",
       "type": "image/png",
       "sizes": "144x144"
     },
     {
-      "src": "/Timetable-Software/pwa/mipmap-xxxhdpi/ic_launcher.png",
+      "src": "./mipmap-xxxhdpi/ic_launcher.png",
       "type": "image/png",
       "sizes": "192x192"
     },
     {
-      "src": "/Timetable-Software/pwa/logo.png",
+      "src": "./logo.png",
       "type": "image/png",
       "sizes": "512x512"
     }
   ],
-  "start_url": "/Timetable-Software/en",
+  "start_url": "/Timetable-Software/?lang=en",
   "background_color": "#fff",
   "display": "standalone",
   "orientation": "portrait",
