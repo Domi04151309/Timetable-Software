@@ -3,14 +3,15 @@
 ---
 var CACHE_NAME = 'timetable-cache-{{ site.time | date: "%Y-%m-%d-%H:%M" }}';
 var urlsToCache = [
-  '{{ site.baseurl }}/',
-  '{{ site.baseurl }}/?lang=en',
-  '{{ site.baseurl }}/?lang=de',
-  '{{ site.baseurl }}/offline',
-  '{{ site.baseurl }}/css/main.css',
-  '{{ site.baseurl }}/js/main.js',
-  '{{ site.baseurl }}/js/strings_en.js',
-  '{{ site.baseurl }}/js/strings_de.js'
+  './',
+  './?lang=en',
+  './?lang=de',
+  './offline',
+  './css/main.css',
+  './js/main.js',
+  './js/jquery.min.js',
+  './js/strings_en.js',
+  './js/strings_de.js'
 ];
 
 self.addEventListener('install', function(event) {
@@ -52,7 +53,7 @@ self.addEventListener('fetch', function(event) {
         }
       );
     }).catch(function() {
-      return caches.match('{{ site.baseurl }}/offline');
+      return caches.match('./offline');
     })
   );
 });
