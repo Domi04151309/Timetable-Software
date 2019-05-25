@@ -1,22 +1,66 @@
 :root {
-  --accent-color: #1e90ff;
+  --accent-color: #4285f4;
+  --accent-color-dark: #2467D6;
+}
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F1F1F1;
+}
+::-webkit-scrollbar-thumb {
+  background: #C1C1C1;
+  border: 2px solid #F1F1F1;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #A8A8A8;
 }
 * {
   box-sizing: border-box;
+  transition-duration: .25s;
 }
 html, body {
   font-family: arial, sans-serif;
-  height: 100%;
-  width: 100%;
   padding: 0;
   margin: 0;
 }
-article, header {
-  max-width: 720px;
-  padding: 0 10px;
-  margin: 0 auto;
+header {
+  position: fixed;
+  top: 0;
+  height: 56px;
+  width: 100%;
+  background: #fff;
+  overflow: hidden;
+  text-align: center;
+  z-index: 50;
 }
-.table{
+.header-shadow {
+  box-shadow: 0 0 8px rgba(0,0,0,.5);
+}
+h1, h2 {
+  font-weight: normal;
+  font-size: 1.17em;
+}
+h1 {
+  height:100%;
+  display: inline-block;
+  color: #767676;
+  line-height: 56px;
+  margin: 0;
+}
+h2 {
+  margin: 1.68em 0 .42em;
+}
+p {
+  margin: .42em 0;
+}
+article {
+  max-width: 720px;
+  padding: 10px;
+  margin: 56px auto 0;
+}
+#table{
   overflow: auto;
 }
 table {
@@ -29,13 +73,16 @@ table {
 td, th, .subject {
   border: 1px solid #dcdcdc;
   text-align: center;
-  width: 16%
+  width: 16%;
+  padding: 0;
+  min-width: 100px;
 }
 th {
   border: 1px solid #000;
   background: #000;
   color: #fff;
   padding: 8px;
+  font-weight: normal;
 }
 td > .subject {
   border: none;
@@ -47,46 +94,43 @@ td > .subject {
 }
 #edit > .subject {
   width: calc(100% - 4px);
-  margin: 2px 2px 0 2px;
+  margin: 2px 2px 0;
 }
 .subject {
   padding: 8px;
   cursor: move;
+  overflow: hidden;
 }
 button, .input-file {
+  margin: 4px 0;
+  outline: 0;
+  border: 0;
+  border-radius: 2px;
+  padding: 8px 16px;
+  font-size: 14px;
+  text-align: center;
   background-color: var(--accent-color);
   color: #fff;
-  border: 2px solid var(--accent-color);
-  padding: 10px 24px;
-  font:14px arial, sans-serif;
-  vertical-align: middle;
-  text-align: center;
-  margin: 4px 0;
-  transition-duration: 0.5s;
   cursor: pointer;
-  outline: none;
 }
 button:hover, .input-file:hover {
-  background-color: #fff;
-  color: #000;
+  background-color: var(--accent-color-dark);
 }
 input[type="file"], #created_with {
   display: none;
 }
-#delete {
+#delete, #edit {
+  border-radius: 2px;
   min-height: 116px;
-  width: 100%;
-  padding: 0 0 28px 0;
-  border: 2px solid #b22222;
-  background-color: #b22222;
+  padding: 0 0 28px;
   overflow: auto;
 }
+#delete {
+  border: 2px solid #b22222;
+  background-color: #b22222;
+}
 #edit {
-  min-height: 116px;
-  width: 100%;
-  padding: 0 0 28px 0;
   border: 2px solid #dcdcdc;
-  overflow: auto;
 }
 .grey {
   color: #767676;
@@ -140,45 +184,12 @@ input[type="file"], #created_with {
   from {transform: translateY(-100%);}
   to {transform: translateY(100%);}
 }
-@media only screen and (max-width: 600px) {
-  header {
-    position: fixed;
-    top: 0;
-    height: 56px;
-    width: 100%;
-    background: #fff;
-    overflow: hidden;
-    box-shadow: 0 0 8px rgba(0,0,0,.5);
-    z-index: 50;
-  }
-  h1 {
-    height:100%;
-    display: inline-block;
-    padding: 0 8px;
-    font-weight: 400;
-    font-size: 1.17em;
-    color: var(--accent-color);
-    line-height: 56px;
-    margin: 0;
-  }
-  article {
-    margin-top: 66px;
-  }
-  button, .input-file, #delete, #edit {
-    border-radius: 2px;
-  }
-  button, .input-file {
-    border: 2px solid var(--accent-color);
-    padding: 8px 16px;
-    box-shadow: 0 3px 1px -2px rgba(0,0,0,.2), 0 2px 2px 0 rgba(0,0,0,.14), 0 1px 5px 0 rgba(0,0,0,.12);
-  }
-}
 @media print {
   @page {
     size: landscape;
     margin: 0;
   }
-  h1, h2, button, .input-file, #delete, #edit, span, p:not(#created_with), ul, #copyright {
+  header, #edit_section {
     display: none;
   }
   #created_with {

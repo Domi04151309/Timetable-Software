@@ -1,6 +1,10 @@
 var lesson = 6
 var number = 0
 
+$(document).scroll(function(){
+  $('header').toggleClass('header-shadow', $(this).scrollTop() > 0);
+})
+
 $(document).ready(function(){
   var lang = getQueryVariable('lang')
   if (lang != false) setup(lang)

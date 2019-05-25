@@ -23,7 +23,7 @@
         <noscript><p style="color:#e00">Please enable JavaScript</p></noscript>
       </div>
     </section>
-    <section class="table"><table>
+    <section id="table"><table>
       <tr>
         <th></th>
         <th id="monday"></th>
@@ -34,38 +34,40 @@
       </tr>
     </table></section>
 
-    <h2 id="subjects"></h2>
-    <button id="add_subject" onclick="addSubject()"></button>
-    <button id="add_lesson" onclick="addLesson()"></button>
-    <p id="drag_and_drop" class="grey"></p>
-    <span id="new"></span>
+    <section id="edit_section">
+      <h2 id="subjects"></h2>
+      <button id="add_subject" onclick="addSubject()"></button>
+      <button id="add_lesson" onclick="addLesson()"></button>
+      <p id="drag_and_drop" class="grey"></p>
+      <span id="new"></span>
 
-    <h2 id="deleting"></h2>
-    <section id="delete" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
-    <button id="empty_trash" onclick="emptyTrash()"></button>
-    <button id="delete_all_subjects" onclick="deleteAllSubjects()"></button>
-    <button id="delete_all_additional_lessons" onclick="deleteAllAdditionalLessons()"></button>
+      <h2 id="deleting"></h2>
+      <section id="delete" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
+      <button id="empty_trash" onclick="emptyTrash()"></button>
+      <button id="delete_all_subjects" onclick="deleteAllSubjects()"></button>
+      <button id="delete_all_additional_lessons" onclick="deleteAllAdditionalLessons()"></button>
 
-    <h2 id="editing"></h2>
-    <section id="edit" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
-    <button id="change_name" onclick="changeName()"></button>
-    <button id="change_color" onclick="changeColor()"></button>
+      <h2 id="editing"></h2>
+      <section id="edit" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
+      <button id="change_name" onclick="changeName()"></button>
+      <button id="change_color" onclick="changeColor()"></button>
 
-    <h2 id="saving_and_loading"></h2>
-    <button id="save" onClick="save()"></button>
-    <label id="load_label" class="input-file"></label>
+      <h2 id="saving_and_loading"></h2>
+      <button id="save" onClick="save()"></button>
+      <label id="load_label" class="input-file"></label>
 
-    <h2 id="printing"></h2>
-    <button id="print_timetable" onclick="window.print()"></button>
-    <p id="printing_color_warning" class="grey"></p>
+      <h2 id="printing"></h2>
+      <button id="print_timetable" onclick="window.print()"></button>
+      <p id="printing_color_warning" class="grey"></p>
 
-    <h2 id="language"></h2>
-    <button id="english" onClick="setLanguage('en')"></button>
-    <button id="german" onClick="setLanguage('de')"></button>
+      <h2 id="language"></h2>
+      <button id="english" onClick="setLanguage('en')"></button>
+      <button id="german" onClick="setLanguage('de')"></button>
 
-    <p id="copyright" class="grey"></p>
+      <p id="copyright" class="grey"></p>
+    </section>
+    
     <p id="created_with"></p>
-    <br>
   </article>
   <script>
     let newWorker
