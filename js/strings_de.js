@@ -16,8 +16,11 @@ var string_drag_and_drop = "Ziehen Sie die F&auml;cher per Drag &amp; Drop in di
 
 var string_deleting = "L&ouml;schen"
 var string_empty_trash = "Papierkorb leeren"
+var string_empty_trash_text = "Der Papierkorb wird geleert. Dieser Schritt kann nicht r&uuml;ckg&auml;ngig gemacht werden."
 var string_delete_all_subjects = "Alle F&auml;cher l&ouml;schen"
+var string_delete_all_subjects_text = "Alle F&auml;cher werden gel&ouml;scht. Dieser Schritt kann nicht r&uuml;ckg&auml;ngig gemacht werden."
 var string_delete_all_additional_lessons = "Alle zus&auml;tzlichen Stunden l&ouml;schen"
+var string_delete_all_additional_lessons_text = "Alle zus&auml;tzlichen Stunden werden gel&ouml;scht. Dieser Schritt kann nicht r&uuml;ckg&auml;ngig gemacht werden."
 
 var string_editing = "Bearbeiten"
 var string_change_name = "Name &auml;ndern"
@@ -37,6 +40,9 @@ var string_german = "Deutsch"
 
 var string_copyright = "&#9400; Copyright 2018 - 2019 Dominik Reichl"
 var string_created_with = "Erstellt mit Stundenplan-Software von Domi04151309"
+
+var string_dialog_btn_positive = "OK"
+var string_dialog_btn_negative = "Abbrechen"
 
 var string_enter_subject = "Geben Sie bitte das Fach ein."
 var string_default_subject = "Fach"

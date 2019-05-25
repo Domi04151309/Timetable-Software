@@ -14,15 +14,55 @@
     <h1 id="timetable"></h1>
   </header>
   <article>
+
     <section id="loading_screen">
       <div id="loading_content">
         <div class="balls">
           <div></div><div></div><div></div><div></div>
         </div>
-        <p class="grey">Loading</p>
+        <p>Loading</p>
         <noscript><p style="color:#e00">Please enable JavaScript</p></noscript>
       </div>
     </section>
+
+    <section id="dialog" class="invisible dialog_frame">
+      <div id="dialog_content" class="dialog_content">
+        <h2 id="dialog_title"></h2>
+        <p id="dialog_text"></p>
+        <div class="dialog_button_bar">
+          <button id="dialog_btn_negative"></button>
+            <button id="dialog_btn_positive"></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="subject_dialog" class="invisible dialog_frame">
+      <div id="subject_dialog_content" class="dialog_content">
+        <h2 id="subject_dialog_title"></h2>
+        <p id="subject_dialog_name_txt"></p>
+        <input type="text" id="subject_dialog_name">
+        <div class="space"></div>
+        <p id="subject_dialog_color_txt"></p>
+        <input type="text" id="subject_dialog_color">
+        <div class="dialog_button_bar">
+          <button id="subject_dialog_btn_negative"></button>
+          <button id="subject_dialog_btn_positive"></button>
+        </div>
+      </div>
+    </section>
+
+    <section id="edit_subject_dialog" class="invisible dialog_frame">
+      <div id="edit_subject_dialog_content" class="dialog_content">
+        <h2 id="edit_subject_dialog_title"></h2>
+        <p id="edit_subject_dialog_text"></p>
+        <input type="text" id="edit_subject_dialog_input">
+        <div class="dialog_button_bar">
+          <button id="edit_subject_dialog_btn_negative"></button>
+          <button id="edit_subject_dialog_btn_positive"></button>
+        </div>
+      </div>
+    </section>
+
     <section id="table"><table>
       <tr>
         <th></th>
@@ -38,7 +78,7 @@
       <h2 id="subjects"></h2>
       <button id="add_subject" onclick="addSubject()"></button>
       <button id="add_lesson" onclick="addLesson()"></button>
-      <p id="drag_and_drop" class="grey"></p>
+      <p id="drag_and_drop"></p>
       <span id="new"></span>
 
       <h2 id="deleting"></h2>
@@ -58,15 +98,15 @@
 
       <h2 id="printing"></h2>
       <button id="print_timetable" onclick="window.print()"></button>
-      <p id="printing_color_warning" class="grey"></p>
+      <p id="printing_color_warning"></p>
 
       <h2 id="language"></h2>
       <button id="english" onClick="setLanguage('en')"></button>
       <button id="german" onClick="setLanguage('de')"></button>
 
-      <p id="copyright" class="grey"></p>
+      <p id="copyright"></p>
     </section>
-    
+
     <p id="created_with"></p>
   </article>
   <script>

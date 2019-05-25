@@ -16,8 +16,11 @@ var string_drag_and_drop = "Drag and drop the subjects into the table!"
 
 var string_deleting = "Deleting"
 var string_empty_trash = "Empty trash"
+var string_empty_trash_text = "This will empty the trash and cannot be undone."
 var string_delete_all_subjects = "Delete all subjects"
+var string_delete_all_subjects_text = "This will delete all subjects and cannot be undone."
 var string_delete_all_additional_lessons = "Delete all additional lessons"
+var string_delete_all_additional_lessons_text = "This will delete all additional lessons and cannot be undone."
 
 var string_editing = "Editing"
 var string_change_name = "Change name"
@@ -37,6 +40,9 @@ var string_german = "German"
 
 var string_copyright = "&#9400; Copyright 2018 - 2019 Dominik Reichl"
 var string_created_with = "Created with Timetable-Software by Domi04151309"
+
+var string_dialog_btn_positive = "OK"
+var string_dialog_btn_negative = "Cancel"
 
 var string_enter_subject = "Please enter the subject."
 var string_default_subject = "Subject"

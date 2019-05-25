@@ -27,7 +27,7 @@ function setup(language) {
   lang_file.setAttribute('src', './js/strings_' + language + '.js')
   document.head.appendChild(lang_file)
   lang_file.onload = function () {
-    $('html').attr('lang', language);
+    $('html').attr('lang', language)
     $('meta[name=description]').attr('content', string_description)
     $('#manifest').attr('href', './pwa/manifest_' + language + '.json')
     document.title = string_timetable_software
@@ -42,7 +42,7 @@ function setup(language) {
 
     $('#subjects').html(string_subjects)
     $('#add_subject').html(string_add_subject)
-    $('#add_lesson').html(string_add_subject)
+    $('#add_lesson').html(string_add_lesson)
     $('#drag_and_drop').html(string_drag_and_drop)
 
     $('#deleting').html(string_deleting)
@@ -68,6 +68,19 @@ function setup(language) {
 
     $('#copyright').html(string_copyright)
     $('#created_with').html(string_created_with)
+
+    $('#dialog_btn_positive').html(string_dialog_btn_positive)
+    $('#dialog_btn_negative').html(string_dialog_btn_negative)
+    $('#subject_dialog_btn_positive').html(string_dialog_btn_positive)
+    $('#subject_dialog_btn_negative').html(string_dialog_btn_negative)
+    $('#edit_subject_dialog_btn_positive').html(string_dialog_btn_positive)
+    $('#edit_subject_dialog_btn_negative').html(string_dialog_btn_negative)
+
+    $('#subject_dialog_title').html(string_add_subject)
+    $('#subject_dialog_name_txt').html(string_enter_subject)
+    $('#subject_dialog_name').attr('placeholder', string_default_subject)
+    $('#subject_dialog_color_txt').html(string_enter_color)
+    $('#subject_dialog_color').attr('placeholder', string_default_color)
 
     $('#loading_screen').remove()
   }
@@ -97,16 +110,59 @@ function getQueryVariable(variable) {
     return(false)
 }
 
+function makeDialog(title, text, onPositiveBtn = function() {}, onNegativeBtn = null) {
+  $('#dialog_title').html(title)
+  $('#dialog_text').html(text)
+  $('#dialog_btn_positive').off('click').on('click', function() {
+    onPositiveBtn()
+    $('#dialog').addClass('invisible')
+  })
+  if (typeof onNegativeBtn === 'function') {
+    $('#dialog_btn_negative').removeClass('invisible')
+    $('#dialog_btn_negative').off('click').on('click', function() {
+      onNegativeBtn()
+      $('#dialog').addClass('invisible')
+    })
+  } else {
+    $('#dialog_btn_negative').addClass('invisible')
+  }
+  $('#dialog').removeClass('invisible')
+}
+
+function makeEditDialog(title, text, placeholder, onPositiveBtn) {
+  $('#edit_subject_dialog_title').html(title)
+  $('#edit_subject_dialog_text').html(text)
+  $('#edit_subject_dialog_input').attr('placeholder', placeholder)
+  $('#edit_subject_dialog_btn_positive').off('click').on('click', function() {
+    onPositiveBtn()
+    $('#edit_subject_dialog').addClass('invisible')
+    $('#edit_subject_dialog_input').val('')
+  })
+  $('#edit_subject_dialog_btn_negative').off('click').on('click', function() {
+    $('#edit_subject_dialog').addClass('invisible')
+  })
+  $('#edit_subject_dialog').removeClass('invisible')
+}
+
 function addSubject() {
-    subject = prompt(string_enter_subject, string_default_subject)
-    bgColor = prompt(string_enter_color, string_default_color)
-    if (subject===null) subject = string_default_subject
-    if (bgColor===null) bgColor = string_default_color
+  $('#subject_dialog_btn_positive').off('click').on('click', function() {
+    var subject = $('#subject_dialog_name').val()
+    var bgColor = $('#subject_dialog_color').val()
+    if (subject === '') subject = string_default_subject
+    if (bgColor === '') bgColor = string_default_color
     txtColor = pickTextColor(bgColor, 'white', 'black')
     $('span#new').append(
       '<div id="drag' + number + '" class="subject" draggable="true" ondragstart="drag(event)" style="background:' + bgColor + ';color:' + txtColor + '">' + subject + '</div>'
     )
     number++
+    $('#subject_dialog_name').val('')
+    $('#subject_dialog_color').val('')
+    $('#subject_dialog').addClass('invisible')
+  })
+  $('#subject_dialog_btn_negative').off('click').on('click', function() {
+    $('#subject_dialog').addClass('invisible')
+  })
+  $('#subject_dialog').removeClass('invisible')
 }
 
 function addLesson() {
@@ -122,43 +178,54 @@ function addLesson() {
 }
 
 function emptyTrash() {
-    $('#delete .subject').remove()
+    makeDialog(string_empty_trash, string_empty_trash_text, function() {
+        $('#delete .subject').remove()
+    }, function() {})
 }
 
 function deleteAllSubjects() {
-    $('.subject').remove()
+    makeDialog(string_delete_all_subjects, string_delete_all_subjects_text, function() {
+        $('.subject').remove()
+    }, function() {})
 }
 
 function deleteAllAdditionalLessons() {
-    $('.additional').remove()
-    lesson = 6
+    makeDialog(string_delete_all_additional_lessons, string_delete_all_additional_lessons_text, function() {
+        $('.additional').remove()
+        lesson = 6
+      }, function() {})
 }
 
 function changeName() {
-    if($('#edit .subject').length){
-        subject = prompt(string_enter_new_subject, string_default_subject)
-        if(subject===null)subject = string_default_subject
-        $('#edit .subject').html(subject)
-    }else{
-        alert(string_put_subject_in_editing_area)
-    }
+  if($('#edit .subject').length){
+    makeEditDialog(string_change_name, string_enter_new_subject, string_default_subject, function() {
+      var subject = $('#edit_subject_dialog_input').val()
+      if(subject === '') bgColor = string_default_subject
+      $('#edit .subject').html(subject)
+    })
+  }else{
+    makeDialog(string_change_name, string_put_subject_in_editing_area)
+  }
 }
 
 function changeColor() {
-    if($('#edit .subject').length){
-        bgColor = prompt(string_enter_new_color, string_default_color)
-        if(bgColor===null)bgColor = string_default_color
-        txtColor = pickTextColor(bgColor, 'white', 'black')
-        $('#edit .subject').css('background',bgColor)
-        $('#edit .subject').css('color',txtColor)
-    }else{
-        alert(string_put_subject_in_editing_area)
-    }
+  if($('#edit .subject').length){
+    makeEditDialog(string_change_color, string_enter_new_color, string_default_color, function() {
+      var bgColor = $('#edit_subject_dialog_input').val()
+      if(bgColor === '') bgColor = string_default_color
+      txtColor = pickTextColor(bgColor, 'white', 'black')
+      $('#edit .subject').css('background',bgColor)
+      $('#edit .subject').css('color',txtColor)
+    })
+  }else{
+    makeDialog(string_change_color, string_put_subject_in_editing_area)
+  }
 }
 
 function setLanguage(language) {
-  if (confirm(string_reload_warning))
-    window.location = '?lang=' + language
+  makeDialog(string_language, string_reload_warning, function() {
+      window.location = '?lang=' + language
+  }, function() {})
 }
 
 function getExtension(filename) {
@@ -206,10 +273,9 @@ function load() {
     }
     reader.onerror = function (evt) {
       document.getElementById('11').innerHTML = evt
-      alert(evt)
     }
   } else if (file && ext.toLowerCase() != 'json')
-    alert(string_file_format_not_supported)
+    makeDialog(string_load, string_file_format_not_supported)
 }
 
 function pickTextColor(inputColor, lightColor, darkColor) {

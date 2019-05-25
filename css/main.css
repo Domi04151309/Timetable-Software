@@ -21,7 +21,7 @@
   transition-duration: .25s;
 }
 html, body {
-  font-family: arial, sans-serif;
+  font: 16px arial, sans-serif;
   padding: 0;
   margin: 0;
 }
@@ -54,6 +54,7 @@ h2 {
 }
 p {
   margin: .42em 0;
+  color: #767676;
 }
 article {
   max-width: 720px;
@@ -132,9 +133,6 @@ input[type="file"], #created_with {
 #edit {
   border: 2px solid #dcdcdc;
 }
-.grey {
-  color: #767676;
-}
 #loading_screen {
   position: fixed;
   top: 0;
@@ -179,6 +177,60 @@ input[type="file"], #created_with {
 }
 .balls div:nth-of-type(3) {
   animation-delay: -0.2s;
+}
+.dialog_frame {
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  background: rgba(0, 0, 0, .75);
+  z-index: 100;
+}
+.dialog_content {
+  position: absolute;
+  width: 90%;
+  max-width: 480px;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  background: #fff;
+  padding: 16px;
+  border-radius: 8px;
+}
+.dialog_content > p, .dialog_content > h2, .dialog_content > input {
+  margin: 0 0 16px;
+}
+.dialog_content > p {
+  font-size: 14px;
+}
+.dialog_button_bar {
+  margin: 32px 0 0;
+  text-align: right;
+}
+.dialog_button_bar > button {
+  background: none;
+  color: var(--accent-color);
+  margin: 0;
+  padding: 0 16px;
+}
+input[type=text] {
+  padding: 6px 3px;
+  width: 20em;
+  max-width: 100%;
+  border: 0;
+  border-bottom: 2px solid #767676;
+  outline: 0;
+  font: inherit;
+}
+input[type=text]:focus {
+  border-bottom: 2px solid var(--accent-color);
+}
+.invisible {
+  display: none;
+}
+.space {
+  height: 16px;
 }
 @keyframes wave {
   from {transform: translateY(-100%);}
