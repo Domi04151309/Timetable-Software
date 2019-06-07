@@ -11,6 +11,19 @@ $(document).ready(function(){
   else setup('en')
 })
 
+let deferredPrompt
+
+window.addEventListener('beforeinstallprompt', (e) => {
+  e.preventDefault()
+  deferredPrompt = e
+  if (!window.matchMedia('(display-mode: standalone)').matches)
+    $('#installing').removeClass('invisible')
+})
+
+function install() {
+  deferredPrompt.prompt()
+}
+
 function setup(language) {
   for (var i = 1; i <= 6; i++) {
     var k = '<tr><th>' + i + '</th>'
@@ -64,6 +77,10 @@ function setup(language) {
     $('#language').html(string_language)
     $('#english').html(string_english)
     $('#german').html(string_german)
+
+    $('#install').html(string_install)
+    $('#install_text').html(string_install_text)
+    $('#install_now').html(string_install_now)
 
     $('#copyright').html(string_copyright)
     $('#created_with').html(string_created_with)

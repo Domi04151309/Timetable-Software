@@ -34,6 +34,10 @@ var string_printing = "Drucken"
 var string_print_timetable = "Stundenplan ausdrucken"
 var string_printing_color_warning = "&#9888; In manchen Browsern muss das Mitdrucken der Farben aktiviert werden!"
 
+var string_install = "Installieren"
+var string_install_text = "Da es sich hier um eine progressive Webanwendung handelt, können Sie sie auf Ihrem Gerät installieren."
+var string_install_now = "Jetzt installieren"
+
 var string_language = "Sprache"
 var string_english = "Englisch"
 var string_german = "Deutsch"

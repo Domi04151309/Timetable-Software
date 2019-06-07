@@ -34,6 +34,10 @@ var string_printing = "Printing"
 var string_print_timetable = "Print timetable"
 var string_printing_color_warning = "&#9888; In some browsers the color printing has to be activated!"
 
+var string_install = "Install"
+var string_install_text = "Since this is a progressive web application, you can install it on your device."
+var string_install_now = "Install now"
+
 var string_language = "Language"
 var string_english = "English"
 var string_german = "German"

@@ -232,6 +232,13 @@ input[type=text]:focus {
 .space {
   height: 16px;
 }
+hr {
+  display: block;
+  height: 1px;
+  margin: 1.68em 0;
+  background: #dcdcdc;
+  border: 0;
+}
 @keyframes wave {
   from {transform: translateY(-100%);}
   to {transform: translateY(100%);}
