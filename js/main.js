@@ -12,9 +12,9 @@ $(document).ready(function(){
 })
 
 function setup(language) {
-  for (i = 1; i <= 6; i++) {
+  for (var i = 1; i <= 6; i++) {
     var k = '<tr><th>' + i + '</th>'
-    for (j = 1; j <= 5; j++) {
+    for (var j = 1; j <= 5; j++) {
       k += '<td id="' + i + j + '" ondrop="drop(event, this)" ondragover="allowDrop(event)"></td>'
     }
     k += '</tr>'
@@ -102,9 +102,9 @@ function drop(ev, el) {
 function getQueryVariable(variable) {
     var query = window.location.search.substring(1)
     var vars = query.split('&')
-    for (var i=0; i < vars.length; i++) {
+    for (var i = 0; i < vars.length; i++) {
       var pair = vars[i].split('=')
-      if(pair[0] == variable){return pair[1]}
+      if (pair[0] == variable) return pair[1]
     }
     return(false)
 }
@@ -139,6 +139,7 @@ function makeEditDialog(title, text, placeholder, onPositiveBtn) {
   })
   $('#edit_subject_dialog_btn_negative').off('click').on('click', function() {
     $('#edit_subject_dialog').addClass('invisible')
+    $('#edit_subject_dialog_input').val('')
   })
   $('#edit_subject_dialog').removeClass('invisible')
 }
@@ -149,17 +150,17 @@ function addSubject() {
     var bgColor = $('#subject_dialog_color').val()
     if (subject === '') subject = string_default_subject
     if (bgColor === '') bgColor = string_default_color
-    txtColor = pickTextColor(bgColor)
     $('span#new').append(
-      '<div id="drag' + numberSubjects + '" class="subject" draggable="true" ondragstart="drag(event)" style="background:' + bgColor + ';color:' + txtColor + '">' + subject + '</div>'
+      '<div id="drag' + numberSubjects + '" class="subject" draggable="true" ondragstart="drag(event)" style="background:'
+      + bgColor + ';color:' + pickTextColor(bgColor) + '">' + subject + '</div>'
     )
     numberSubjects++
-    $('#subject_dialog_name').val('')
-    $('#subject_dialog_color').val('')
+    $('#subject_dialog_name, #subject_dialog_color').val('')
     $('#subject_dialog').addClass('invisible')
   })
   $('#subject_dialog_btn_negative').off('click').on('click', function() {
     $('#subject_dialog').addClass('invisible')
+    $('#subject_dialog_name, #subject_dialog_color').val('')
   })
   $('#subject_dialog').removeClass('invisible')
 }
@@ -167,7 +168,7 @@ function addSubject() {
 function addLesson() {
   numberLessons++
   var k = '<tr class="additional"><th>' + numberLessons + '</th>'
-  for (i = 1; i <= 5; i++) {
+  for (var i = 1; i <= 5; i++) {
     k += '<td id="' + numberLessons + i + '" ondrop="drop(event, this)" ondragover="allowDrop(event)"></td>'
   }
   k += '</tr>'
@@ -194,27 +195,26 @@ function deleteAllAdditionalLessons() {
 }
 
 function changeName() {
-  if($('#edit .subject').length){
+  if ($('#edit .subject').length) {
     makeEditDialog(string_change_name, string_enter_new_subject, string_default_subject, function() {
       var subject = $('#edit_subject_dialog_input').val()
-      if(subject === '') bgColor = string_default_subject
+      if (subject === '') bgColor = string_default_subject
       $('#edit .subject').html(subject)
     })
-  }else{
+  } else {
     makeDialog(string_change_name, string_put_subject_in_editing_area)
   }
 }
 
 function changeColor() {
-  if($('#edit .subject').length){
+  if ($('#edit .subject').length) {
     makeEditDialog(string_change_color, string_enter_new_color, string_default_color, function() {
       var bgColor = $('#edit_subject_dialog_input').val()
-      if(bgColor === '') bgColor = string_default_color
-      txtColor = pickTextColor(bgColor)
+      if (bgColor === '') bgColor = string_default_color
       $('#edit .subject').css('background',bgColor)
-      $('#edit .subject').css('color',txtColor)
+      $('#edit .subject').css('color',pickTextColor(bgColor))
     })
-  }else{
+  } else {
     makeDialog(string_change_color, string_put_subject_in_editing_area)
   }
 }
@@ -230,21 +230,21 @@ function getExtension(filename) {
   return parts[parts.length - 1]
 }
 
-var hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f");
+const hexDigits = new Array("0","1","2","3","4","5","6","7","8","9","a","b","c","d","e","f")
 
 function rgb2hex(rgb) {
-  rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-  return hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3]);
+  rgb = rgb.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/)
+  return hex(rgb[1]) + hex(rgb[2]) + hex(rgb[3])
 }
 
 function hex(x) {
-  return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16];
+  return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16]
 }
 
 function save() {
   var subjectsObj = {}
-  for (i = 1; i <= numberLessons; i++) {
-    for (j = 1; j <= 5; j++) {
+  for (var i = 1; i <= numberLessons; i++) {
+    for (var j = 1; j <= 5; j++) {
       var id = String(i) + j
       var innerHTML = document.getElementById(id).innerHTML
       if (innerHTML != '') {
@@ -273,19 +273,18 @@ function load() {
     var reader = new FileReader()
     reader.readAsText(file, 'UTF-8')
     reader.onload = function (evt) {
-      var loadObj = JSON.parse(reader.result)
-      $('.additional').remove()
-      $('.subject').remove()
+      $('.additional, .subject').remove()
       numberLessons = 6
       numberSubjects = 0
-      for (i = 0; i < loadObj['numberLessons'] - 6; i++) {
+      var loadObj = JSON.parse(reader.result)
+      for (var i = 0; i < loadObj['numberLessons'] - 6; i++) {
         addLesson()
       }
       var subjects = loadObj['subjects']
-      for (var prop in subjects) {
-        txtColor = pickTextColor(subjects[prop].color)
-        $('#' + prop).append(
-          '<div id="drag' + numberSubjects + '" class="subject" draggable="true" ondragstart="drag(event)" style="background:' + subjects[prop].color + ';color:' + txtColor + '">' + subjects[prop].name + '</div>'
+      for (const id in subjects) {
+        $('#' + id).append(
+          '<div id="drag' + numberSubjects + '" class="subject" draggable="true" ondragstart="drag(event)" style="background:'
+          + subjects[id].color + ';color:' + pickTextColor(subjects[id].color) + '">' + subjects[id].name + '</div>'
         )
         numberSubjects++
       }
@@ -298,7 +297,7 @@ function load() {
 }
 
 function pickTextColor(inputColor) {
-  var color = '000000'
+  var color = 'FFFFFF'
   if (inputColor.charAt(0) === '#' && inputColor.length === 7)
     color = inputColor.substring(1,7)
   else if (inputColor.charAt(0) === '#' && inputColor.length === 4)
