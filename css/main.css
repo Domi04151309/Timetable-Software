@@ -243,6 +243,11 @@ hr {
   from {transform: translateY(-100%);}
   to {transform: translateY(100%);}
 }
+@media all and (display-mode: standalone) {
+  #installing {
+    display: none;
+  }
+}
 @media print {
   @page {
     size: landscape;

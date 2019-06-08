@@ -84,13 +84,13 @@
       <span id="new"></span>
 
       <h2 id="deleting"></h2>
-      <section id="delete" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
+      <section id="delete" ondrop="drop(event, this)" ondragover="allowDrop(event)"></section>
       <button id="empty_trash" onclick="emptyTrash()"></button>
       <button id="delete_all_subjects" onclick="deleteAllSubjects()"></button>
       <button id="delete_all_additional_lessons" onclick="deleteAllAdditionalLessons()"></button>
 
       <h2 id="editing"></h2>
-      <section id="edit" ondrop="drop(event)" ondragover="allowDrop(event)"></section>
+      <section id="edit" ondrop="drop(event, this)" ondragover="allowDrop(event)"></section>
       <button id="change_name" onclick="changeName()"></button>
       <button id="change_color" onclick="changeColor()"></button>
 
@@ -104,10 +104,10 @@
 
       <hr>
 
-      <section id="installing" class="invisible">
+      <section id="installing">
         <h2 id="install"></h2>
         <p id="install_text"></p>
-        <button id="install_now" onClick="install()"></button>
+        <button id="install_now" class="invisible" onClick="install()"></button>
       </section>
 
       <h2 id="language"></h2>

@@ -16,8 +16,7 @@ let deferredPrompt
 window.addEventListener('beforeinstallprompt', (e) => {
   e.preventDefault()
   deferredPrompt = e
-  if (!window.matchMedia('(display-mode: standalone)').matches)
-    $('#installing').removeClass('invisible')
+  $('#install_now').removeClass('invisible')
 })
 
 function install() {
