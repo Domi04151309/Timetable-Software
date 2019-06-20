@@ -95,7 +95,7 @@
       <button id="change_color" onclick="changeColor()"></button>
 
       <h2 id="saving_and_loading"></h2>
-      <button id="save" onClick="save()"></button>
+      <button id="save" onClick="saveToFile()"></button>
       <label id="load_label" class="input-file"></label>
 
       <h2 id="printing"></h2>
@@ -110,9 +110,12 @@
         <button id="install_now" class="invisible" onClick="install()"></button>
       </section>
 
-      <h2 id="language"></h2>
-      <button id="english" onClick="setLanguage('en')"></button>
-      <button id="german" onClick="setLanguage('de')"></button>
+      <h2 id="settings"></h2>
+      <p id="auto_save"></p>
+      <label class="switch">
+        <input id="autoSaveSwitch" type="checkbox" onclick="onAutoSaveChanged()">
+        <span class="slider"></span>
+      </label>
 
       <p id="copyright"></p>
     </section>

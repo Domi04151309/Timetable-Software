@@ -42,6 +42,9 @@ var string_language = "Language"
 var string_english = "English"
 var string_german = "German"
 
+var string_settings = "Settings"
+var string_auto_save = "Automatically save timetable"
+
 var string_copyright = "&#9400; Copyright 2018 - 2019 Dominik Reichl"
 var string_created_with = "Created with Timetable-Software by Domi04151309"
 

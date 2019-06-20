@@ -42,6 +42,9 @@ var string_language = "Sprache"
 var string_english = "Englisch"
 var string_german = "Deutsch"
 
+var string_settings = "Einstellungen"
+var string_auto_save = "Stundenplan automatisch speichern"
+
 var string_copyright = "&#9400; Copyright 2018 - 2019 Dominik Reichl"
 var string_created_with = "Erstellt mit Stundenplan-Software von Domi04151309"
 

@@ -1,5 +1,6 @@
 var numberLessons = 6
 var numberSubjects = 0
+var autoSave = localStorage.getItem('auto_save')
 
 $(document).scroll(function(){
   $('header').toggleClass('header-shadow', $(this).scrollTop() > 0);
@@ -31,6 +32,11 @@ function setup(language) {
     }
     k += '</tr>'
     $('table').append(k)
+  }
+
+  if (autoSave == 'true') {
+    $('#autoSaveSwitch').prop('checked', true)
+    loadFromObject(localStorage.getItem('auto_save_obj'))
   }
 
   var lang_file = document.createElement('script')
@@ -67,19 +73,22 @@ function setup(language) {
 
     $('#saving_and_loading').html(string_saving_and_loading)
     $('#save').html(string_save)
-    $('#load_label').html('<input id="load" type="file" onchange="load()" accept=".json">' + string_load)
+    $('#load_label').html('<input id="load" type="file" onchange="loadFromFile()" accept=".json">' + string_load)
 
     $('#printing').html(string_printing)
     $('#print_timetable').html(string_print_timetable)
     $('#printing_color_warning').html(string_printing_color_warning)
 
+    $('#install').html(string_install)
+    $('#install_text').html(string_install_text)
+    $('#install_now').html(string_install_now)
+
     $('#language').html(string_language)
     $('#english').html(string_english)
     $('#german').html(string_german)
 
-    $('#install').html(string_install)
-    $('#install_text').html(string_install_text)
-    $('#install_now').html(string_install_now)
+    $('#settings').html(string_settings)
+    $('#auto_save').html(string_auto_save)
 
     $('#copyright').html(string_copyright)
     $('#created_with').html(string_created_with)
@@ -113,6 +122,9 @@ function drop(ev, el) {
     ev.preventDefault()
     var data = ev.dataTransfer.getData('text')
     el.appendChild(document.getElementById(data))
+    if (autoSave) {
+      localStorage.setItem('auto_save_obj', generateSaveObj())
+    }
 }
 
 function getQueryVariable(variable) {
@@ -257,7 +269,7 @@ function hex(x) {
   return isNaN(x) ? "00" : hexDigits[(x - x % 16) / 16] + hexDigits[x % 16]
 }
 
-function save() {
+function generateSaveObj() {
   var subjectsObj = {}
   for (var i = 1; i <= numberLessons; i++) {
     for (var j = 1; j <= 5; j++) {
@@ -275,34 +287,45 @@ function save() {
   var saveObj = {}
   saveObj['numberLessons'] = numberLessons
   saveObj['subjects'] = subjectsObj
+  return JSON.stringify(saveObj)
+}
+
+function saveToFile() {
   var hiddenElement = document.createElement('a')
-  hiddenElement.href = 'data:attachment/text,' + encodeURI(JSON.stringify(saveObj)).replace(/#/g, '%23')
+  hiddenElement.href = 'data:attachment/text,' + encodeURI(generateSaveObj()).replace(/#/g, '%23')
   hiddenElement.target = '_blank'
   hiddenElement.download = string_default_file_name + '.json'
   hiddenElement.click()
 }
 
-function load() {
+function loadFromObject(loadObj) {
+  $('.additional, .subject').remove()
+  numberLessons = 6
+  numberSubjects = 0
+  var loadObj = JSON.parse(loadObj)
+  for (var i = 0; i < loadObj['numberLessons'] - 6; i++) {
+    addLesson()
+  }
+  var subjects = loadObj['subjects']
+  for (const id in subjects) {
+    $('#' + id).append(
+      '<div id="drag' + numberSubjects + '" class="subject" draggable="true" ondragstart="drag(event)" style="background:'
+      + subjects[id].color + ';color:' + pickTextColor(subjects[id].color) + '">' + subjects[id].name + '</div>'
+    )
+    numberSubjects++
+  }
+}
+
+function loadFromFile() {
   var file = document.getElementById('load').files[0]
   var ext = getExtension(document.getElementById('load').value)
   if (file && ext.toLowerCase() == 'json') {
     var reader = new FileReader()
     reader.readAsText(file, 'UTF-8')
     reader.onload = function (evt) {
-      $('.additional, .subject').remove()
-      numberLessons = 6
-      numberSubjects = 0
-      var loadObj = JSON.parse(reader.result)
-      for (var i = 0; i < loadObj['numberLessons'] - 6; i++) {
-        addLesson()
-      }
-      var subjects = loadObj['subjects']
-      for (const id in subjects) {
-        $('#' + id).append(
-          '<div id="drag' + numberSubjects + '" class="subject" draggable="true" ondragstart="drag(event)" style="background:'
-          + subjects[id].color + ';color:' + pickTextColor(subjects[id].color) + '">' + subjects[id].name + '</div>'
-        )
-        numberSubjects++
+      loadFromObject(reader.result)
+      if (autoSave) {
+        localStorage.setItem('auto_save_obj', generateSaveObj())
       }
     }
     reader.onerror = function (evt) {
@@ -310,6 +333,11 @@ function load() {
     }
   } else if (file && ext.toLowerCase() != 'json')
     makeDialog(string_load, string_file_format_not_supported)
+}
+
+function onAutoSaveChanged() {
+  autoSave = $('#autoSaveSwitch').prop('checked')
+  localStorage.setItem('auto_save', autoSave)
 }
 
 function pickTextColor(inputColor) {
