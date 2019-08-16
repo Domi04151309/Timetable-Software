@@ -62,7 +62,7 @@ function setup(language) {
   lang_file.onload = function () {
     $('html').attr('lang', language)
     $('meta[name=description]').attr('content', string_description)
-    $('#manifest').attr('href', './pwa/manifest_' + language + '.json')
+    $('#manifest').attr('href', './pwa/manifest_' + language + '.webmanifest')
     document.title = string_timetable_software
 
     $('#timetable').html(string_timetable)

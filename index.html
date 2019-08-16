@@ -1,8 +1,8 @@
 <!doctype html>
 <html>
 <head>
+  <meta charset="utf-8">
   <title>Timetable-Software</title>
-	<meta charset="utf-8">
 	<meta name="theme-color" content="#fff">
   <meta property="og:image" content="https://domi04151309.github.io/Timetable-Software/preview.jpg">
   <link rel="icon" href="./favicon.ico">
@@ -32,8 +32,8 @@
         <h2 id="dialog_title"></h2>
         <p id="dialog_text"></p>
         <div class="dialog_button_bar">
-          <button id="dialog_btn_negative"></button>
-            <button id="dialog_btn_positive"></button>
+          <button type="button" id="dialog_btn_negative"></button>
+            <button type="button" id="dialog_btn_positive"></button>
         </div>
       </div>
     </section>
@@ -47,8 +47,8 @@
         <p id="subject_dialog_color_txt"></p>
         <input type="text" id="subject_dialog_color">
         <div class="dialog_button_bar">
-          <button id="subject_dialog_btn_negative"></button>
-          <button id="subject_dialog_btn_positive"></button>
+          <button type="button" id="subject_dialog_btn_negative"></button>
+          <button type="button" id="subject_dialog_btn_positive"></button>
         </div>
       </div>
     </section>
@@ -59,8 +59,8 @@
         <p id="edit_subject_dialog_text"></p>
         <input type="text" id="edit_subject_dialog_input">
         <div class="dialog_button_bar">
-          <button id="edit_subject_dialog_btn_negative"></button>
-          <button id="edit_subject_dialog_btn_positive"></button>
+          <button type="button" id="edit_subject_dialog_btn_negative"></button>
+          <button type="button" id="edit_subject_dialog_btn_positive"></button>
         </div>
       </div>
     </section>
@@ -78,28 +78,28 @@
 
     <section id="edit_section">
       <h2 id="subjects"></h2>
-      <button id="add_subject" onclick="addSubject()"></button>
-      <button id="add_lesson" onclick="addLesson()"></button>
+      <button type="button" id="add_subject" onclick="addSubject()"></button>
+      <button type="button" id="add_lesson" onclick="addLesson()"></button>
       <p id="drag_and_drop"></p>
       <span id="new"></span>
 
       <h2 id="deleting"></h2>
       <section id="delete" ondrop="drop(event, this)" ondragover="allowDrop(event)"></section>
-      <button id="empty_trash" onclick="emptyTrash()"></button>
-      <button id="delete_all_subjects" onclick="deleteAllSubjects()"></button>
-      <button id="delete_all_additional_lessons" onclick="deleteAllAdditionalLessons()"></button>
+      <button type="button" id="empty_trash" onclick="emptyTrash()"></button>
+      <button type="button" id="delete_all_subjects" onclick="deleteAllSubjects()"></button>
+      <button type="button" id="delete_all_additional_lessons" onclick="deleteAllAdditionalLessons()"></button>
 
       <h2 id="editing"></h2>
       <section id="edit" ondrop="drop(event, this)" ondragover="allowDrop(event)"></section>
-      <button id="change_name" onclick="changeName()"></button>
-      <button id="change_color" onclick="changeColor()"></button>
+      <button type="button" id="change_name" onclick="changeName()"></button>
+      <button type="button" id="change_color" onclick="changeColor()"></button>
 
       <h2 id="saving_and_loading"></h2>
-      <button id="save" onClick="saveToFile()"></button>
+      <button type="button" id="save" onClick="saveToFile()"></button>
       <label id="load_label" class="input-file"></label>
 
       <h2 id="printing"></h2>
-      <button id="print_timetable" onclick="window.print()"></button>
+      <button type="button" id="print_timetable" onclick="window.print()"></button>
       <p id="printing_color_warning"></p>
 
       <hr>
@@ -107,13 +107,17 @@
       <section id="installing">
         <h2 id="install"></h2>
         <p id="install_text"></p>
-        <button id="install_now" class="invisible" onClick="install()"></button>
+        <button type="button" id="install_now" class="invisible" onClick="install()"></button>
       </section>
+
+      <h2 id="language"></h2>
+      <button type="button" id="english" onClick="setLanguage('en')"></button>
+      <button type="button" id="german" onClick="setLanguage('de')"></button>
 
       <h2 id="settings"></h2>
       <p id="auto_save"></p>
       <label class="switch">
-        <input id="autoSaveSwitch" type="checkbox" onclick="onAutoSaveChanged()">
+        <input id="autoSaveSwitch" type="checkbox" onclick="onAutoSaveChanged()" aria-labelledby="auto_save">
         <span class="slider"></span>
       </label>
 
