@@ -20,6 +20,22 @@ window.addEventListener('beforeinstallprompt', (e) => {
   $('#install_now').removeClass('invisible')
 })
 
+$('#dialog').click( function(e) {
+  if (e.target == this)
+    $('#dialog').addClass('invisible')
+})
+
+$('#edit_subject_dialog').click( function(e) {
+  if (e.target == this)
+    $('#edit_subject_dialog').addClass('invisible')
+})
+
+
+$('#subject_dialog').click( function(e) {
+  if (e.target == this)
+    $('#subject_dialog').addClass('invisible')
+})
+
 function install() {
   deferredPrompt.prompt()
 }
@@ -143,7 +159,7 @@ function makeDialog(title, text, onPositiveBtn = function() {}, onNegativeBtn = 
   $('#dialog_btn_positive').off('click').on('click', function() {
     onPositiveBtn()
     $('#dialog').addClass('invisible')
-  })
+  }).focus()
   if (typeof onNegativeBtn === 'function') {
     $('#dialog_btn_negative').removeClass('invisible')
     $('#dialog_btn_negative').off('click').on('click', function() {
@@ -164,7 +180,7 @@ function makeEditDialog(title, text, placeholder, onPositiveBtn) {
     onPositiveBtn()
     $('#edit_subject_dialog').addClass('invisible')
     $('#edit_subject_dialog_input').val('')
-  })
+  }).focus()
   $('#edit_subject_dialog_btn_negative').off('click').on('click', function() {
     $('#edit_subject_dialog').addClass('invisible')
     $('#edit_subject_dialog_input').val('')
@@ -185,7 +201,7 @@ function addSubject() {
     numberSubjects++
     $('#subject_dialog_name, #subject_dialog_color').val('')
     $('#subject_dialog').addClass('invisible')
-  })
+  }).focus()
   $('#subject_dialog_btn_negative').off('click').on('click', function() {
     $('#subject_dialog').addClass('invisible')
     $('#subject_dialog_name, #subject_dialog_color').val('')
@@ -226,8 +242,8 @@ function changeName() {
   if ($('#edit .subject').length) {
     makeEditDialog(string_change_name, string_enter_new_subject, string_default_subject, function() {
       var subject = $('#edit_subject_dialog_input').val()
-      if (subject === '') bgColor = string_default_subject
-      $('#edit .subject').html(subject)
+      if (subject === "") $('#edit .subject').html(string_default_subject)
+      else $('#edit .subject').html(subject)
     })
   } else {
     makeDialog(string_change_name, string_put_subject_in_editing_area)
@@ -238,9 +254,14 @@ function changeColor() {
   if ($('#edit .subject').length) {
     makeEditDialog(string_change_color, string_enter_new_color, string_default_color, function() {
       var bgColor = $('#edit_subject_dialog_input').val()
-      if (bgColor === '') bgColor = string_default_color
-      $('#edit .subject').css('background',bgColor)
-      $('#edit .subject').css('color',pickTextColor(bgColor))
+      if (bgColor === "") {
+        $('#edit .subject').css('background',string_default_color)
+        $('#edit .subject').css('color',pickTextColor(string_default_color))
+      }
+      else {
+        $('#edit .subject').css('background',bgColor)
+        $('#edit .subject').css('color',pickTextColor(bgColor))
+      }
     })
   } else {
     makeDialog(string_change_color, string_put_subject_in_editing_area)
