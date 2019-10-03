@@ -5,5 +5,4 @@ The software is available in English and German. You can find links to the websi
 [English version](https://domi04151309.github.io/Timetable-Software/?lang=en) | [German version](https://domi04151309.github.io/Timetable-Software/?lang=de)
 
 ## Previews
-<img alt="Desktop preview" src="https://domi04151309.github.io/images/Web/timetable-pc.jpg" width="64%"/>
-<img alt="Mobile preview" src="https://domi04151309.github.io/images/Web/timetable-mobile.jpg" width="16%"/>
+<img alt="Desktop preview" src="https://domi04151309.github.io/images/Web/timetable-pc.jpg" width="64%"/><img alt="Mobile preview" src="https://domi04151309.github.io/images/Web/timetable-mobile.jpg" width="16%"/>
