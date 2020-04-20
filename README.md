@@ -1,3 +1,4 @@
+![App Icon](https://raw.githubusercontent.com/Domi04151309/Timetable-Software/master/pwa/mipmap-xxxhdpi/ic_launcher.png)
 # Timetable-Software
 Timetable-Software is a software for creating and printing your timetable.  
 The software is available in English and German. You can find links to the websites below.  
